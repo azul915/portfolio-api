@@ -6,6 +6,7 @@ import (
     "fmt"
     "log"
     "net/http"
+    "time"
 
     "github.com/labstack/echo"
     "github.com/labstack/echo/middleware"
@@ -42,7 +43,20 @@ func firebaseInit(ctx context.Context) (*firestore.Client, error) {
 
 func addSkill(c echo.Context) error {
 
-    err := setServerSideSkill()
+    s := Skill {
+            Category: Category {
+                ID: 2,
+                Name: "フレームワーク",
+            },
+            CreatedAt: time.Now(),
+            Detail: "軽量なAPIを実装したことがある。",
+            Duration: 2,
+            Name: "Flask",
+            SelfEval: 1,
+            Term: "serverside",
+        }
+
+    err := setSkill(s)
     if err != nil {
         log.Fatalln(err)
     }
@@ -53,7 +67,8 @@ func addSkill(c echo.Context) error {
 
 func getSkills(c echo.Context) error {
 
-    skills, err := getServerSideSkill()
+    term := "infrastructure"
+    skills, err := getSkill(term)
     if err != nil {
         log.Fatalln(err)
     }

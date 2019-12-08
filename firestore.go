@@ -26,7 +26,7 @@ type Category struct {
 
 type Skills *[]Skill
 
-func getServerSideSkill() ([]*Skill, error) {
+func getSkill(term string) ([]*Skill, error) {
 
     ctx := context.Background()
     client, err := firebaseInit(ctx)
@@ -35,7 +35,7 @@ func getServerSideSkill() ([]*Skill, error) {
     }
 
     // データ取得
-    data := client.Collection("serverside").Documents(ctx)
+    data := client.Collection(term).Documents(ctx)
 
     // 全ドキュメント取得
     docs, err := data.GetAll()
@@ -72,7 +72,7 @@ func mapToStruct(m map[string]interface{}, val interface{}) error {
     return nil
 }
 
-func setServerSideSkill() error {
+func setSkill(s Skill) error {
 
     ctx := context.Background()
     client, err := firebaseInit(ctx)
@@ -80,25 +80,33 @@ func setServerSideSkill() error {
         log.Fatalln(err)
     }
 
+    // Termでセット先ドキュメントを指定
+    term := s.Term
+    // Nameでドキュメント内の名前を指定
+    name := s.Name
     // データ追加
-    collection := client.Collection("serverside")
-    doc := collection.Doc("Go")
-    _, err = doc.Set(ctx, Skill {
-        Category: Category {
-            ID: 0,
-            Name: "言語",
-        },
-        CreatedAt: time.Now(),
-        Detail: "SpringBootでAPIコンテナを実装したことがある。",
-        Duration: 3,
-        Name: "Kotlin",
-        SelfEval: 4,
-        Term: "serverside",
-    })
-
+    _, err = client.Collection(term).Doc(name).Set(ctx, s)
     if err != nil {
         log.Fatalln(err)
     }
+
+    /*
+        _, err = client.Collection(term).Doc(name).Set(ctx, Skill {
+            Category: Category {
+                ID: 0,
+                Name: "言語",
+            },
+            CreatedAt: time.Now(),
+            Detail: "ハスケルハスケルハスケルハスケル",
+            Duration: 1,
+            Name: "Haskell",
+            SelfEval: 1,
+            Term: "serverside",
+        })
+        if err != nil {
+            log.Fatalln(err)
+        }
+    */
 
     defer client.Close()
 
