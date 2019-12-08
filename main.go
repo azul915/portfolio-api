@@ -40,6 +40,19 @@ func firebaseInit(ctx context.Context) (*firestore.Client, error) {
 
 }
 
+func getSkills(c echo.Context) error {
+
+    term := "infrastructure"
+    skills, err := getSkill(term)
+    if err != nil {
+        log.Fatalln(err)
+    }
+
+    return c.JSON(http.StatusOK, skills)
+
+}
+
+
 
 func addSkill(c echo.Context) error {
 
@@ -65,17 +78,24 @@ func addSkill(c echo.Context) error {
 
 }
 
-func getSkills(c echo.Context) error {
 
-    term := "infrastructure"
-    skills, err := getSkill(term)
+
+func deleteSkill(c echo.Context) error {
+
+    req := delSkill {
+        Name: "Flask",
+        Term: "serverside",
+    }
+
+    err := delete(req)
     if err != nil {
         log.Fatalln(err)
     }
 
-    return c.JSON(http.StatusOK, skills)
-
+    return c.JSON(http.StatusOK, err)
 }
+
+
 
 func main() {
 
@@ -86,6 +106,7 @@ func main() {
 
     e.GET("/", getSkills)
     e.GET("/set", addSkill)
+    e.GET("/delete", deleteSkill)
     e.Logger.Fatal(e.Start(":1999"))
 
 }

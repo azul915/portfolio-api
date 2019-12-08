@@ -26,6 +26,11 @@ type Category struct {
 
 type Skills *[]Skill
 
+type delSkill struct {
+    Name      string     `json:"name"`
+    Term      string     `json:"term"`
+}
+
 func getSkill(term string) ([]*Skill, error) {
 
     ctx := context.Background()
@@ -80,9 +85,9 @@ func setSkill(s Skill) error {
         log.Fatalln(err)
     }
 
-    // Termでセット先ドキュメントを指定
+    // Termでセット先コレクションを指定
     term := s.Term
-    // Nameでドキュメント内の名前を指定
+    // Nameでコレクション内のドキュメント名を指定
     name := s.Name
     // データ追加
     _, err = client.Collection(term).Doc(name).Set(ctx, s)
@@ -107,6 +112,29 @@ func setSkill(s Skill) error {
             log.Fatalln(err)
         }
     */
+
+    defer client.Close()
+
+    return err
+
+}
+
+func delete(d delSkill) error {
+
+    ctx := context.Background()
+    client, err := firebaseInit(ctx)
+    if err != nil {
+        log.Fatalln(err)
+    }
+
+    // 削除先コレクション
+    term := d.Term
+    // 削除先ドキュメント
+    name := d.Name
+    _, err = client.Collection(term).Doc(name).Delete(ctx)
+    if err != nil {
+        log.Fatalln(err)
+    }
 
     defer client.Close()
 
