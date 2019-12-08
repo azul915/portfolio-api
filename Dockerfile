@@ -6,14 +6,13 @@ COPY . .
 
 RUN set -ex && \
     apk update && \
-    apk add --no-cache git && \ 
-    go build -o app && \
-    go get gopkg.in/urfave/cli.v2@master && \
+    apk add --no-cache git && \
+    # go build -o app && 
     : "for hot reload" && \
+    go get gopkg.in/urfave/cli.v2@master && \
     go get github.com/oxequa/realize && \
-    : "for debugger" && \
-    go get github.com/go-delve/delve/cmd/dlv && \
-    go build -o /go/bin/dlv github.com/go-delve/delve/cmd/dlv
+    : "for Firebase Admin SDK" && \
+    go get firebase.google.com/go
 
 FROM alpine
 
