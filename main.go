@@ -35,7 +35,7 @@ func firebaseInit(ctx context.Context) (*firestore.Client, error) {
 
 }
 
-func getSkills(w http.ResponseWriter, r *http.Request) {
+func getSkills(writer http.ResponseWriter, request *http.Request) {
 
     term := "infrastructure"
     skills, err := getSkill(term)
@@ -43,10 +43,10 @@ func getSkills(w http.ResponseWriter, r *http.Request) {
         log.Fatalln(err)
     }
 
-    json.NewEncoder(w).Encode(skills)
+    json.NewEncoder(writer).Encode(skills)
 }
 
-func addSkill(w http.ResponseWriter, r *http.Request) {
+func addSkill(writer http.ResponseWriter, request *http.Request) {
 
     s := Skill{
         Category: Category{
@@ -65,10 +65,10 @@ func addSkill(w http.ResponseWriter, r *http.Request) {
         log.Fatalln(err)
     }
 
-    json.NewEncoder(w).Encode(err)
+    json.NewEncoder(writer).Encode(err)
 }
 
-func deleteSkill(w http.ResponseWriter, r *http.Request) {
+func deleteSkill(writer http.ResponseWriter, request *http.Request) {
 
     req := delSkill{
         Name: "PHP",
@@ -80,7 +80,7 @@ func deleteSkill(w http.ResponseWriter, r *http.Request) {
         log.Fatalln(err)
     }
 
-    json.NewEncoder(w).Encode(err)
+    json.NewEncoder(writer).Encode(err)
 }
 
 func handleRequests() {
