@@ -3,13 +3,11 @@ package main
 import (
 
     "context"
+    "encoding/json"
     "fmt"
     "log"
     "net/http"
     "time"
-
-    "github.com/labstack/echo"
-    "github.com/labstack/echo/middleware"
 
     "cloud.google.com/go/firestore"
     "firebase.google.com/go"
@@ -40,7 +38,7 @@ func firebaseInit(ctx context.Context) (*firestore.Client, error) {
 
 }
 
-func getSkills(c echo.Context) error {
+func getSkills(w http.ResponseWriter, r *http.Request) {
 
     term := "infrastructure"
     skills, err := getSkill(term)
@@ -48,66 +46,59 @@ func getSkills(c echo.Context) error {
         log.Fatalln(err)
     }
 
-    return c.JSON(http.StatusOK, skills)
-
+    json.NewEncoder(w).Encode(skills)
 }
 
 
-
-func addSkill(c echo.Context) error {
+func addSkill(w http.ResponseWriter, r *http.Request) {
 
     s := Skill {
-            Category: Category {
-                ID: 2,
-                Name: "フレームワーク",
-            },
-            CreatedAt: time.Now(),
-            Detail: "軽量なAPIを実装したことがある。",
-            Duration: 2,
-            Name: "Flask",
-            SelfEval: 1,
-            Term: "serverside",
-        }
-
+        Category: Category {
+            ID: 2,
+            Name: "フレームワーク",
+        },
+        CreatedAt: time.Now(),
+        Detail: "軽量なAPIを実装したことがある。",
+        Duration: 2,
+        Name: "Echo",
+        SelfEval: 1,
+        Term: "serverside",
+    }
     err := setSkill(s)
     if err != nil {
         log.Fatalln(err)
     }
 
-    return c.JSON(http.StatusOK, err)
-
+    json.NewEncoder(w).Encode(err)
 }
 
 
+// func deleteSkill(c echo.Context) error {
 
-func deleteSkill(c echo.Context) error {
+//     req := delSkill {
+//         Name: "Flask",
+//         Term: "serverside",
+//     }
 
-    req := delSkill {
-        Name: "Flask",
-        Term: "serverside",
-    }
+//     err := delete(req)
+//     if err != nil {
+//         log.Fatalln(err)
+//     }
 
-    err := delete(req)
-    if err != nil {
-        log.Fatalln(err)
-    }
+//     return c.JSON(http.StatusOK, err)
+// }
 
-    return c.JSON(http.StatusOK, err)
+func handleRequests() {
+    http.HandleFunc("/", getSkills)
+    http.HandleFunc("/add", addSkill)
+    log.Fatal(http.ListenAndServe(":1999", nil))
 }
-
 
 
 func main() {
 
-    e := echo.New()
-
-    e.Use(middleware.Logger())
-    e.Use(middleware.Recover())
-
-    e.GET("/", getSkills)
-    e.GET("/set", addSkill)
-    e.GET("/delete", deleteSkill)
-    e.Logger.Fatal(e.Start(":1999"))
+    // e.GET("/delete", deleteSkill)
+    handleRequests()
 
 }
 
