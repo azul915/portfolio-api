@@ -7,12 +7,7 @@ services:
       target: build
     container_name: goapi
     volumes:
-      - ./:/go/app
+      - ./:/go/src/app
     command: realize start --run --no-config
     ports:
       - 1999:1999 # for WebServer
-      - 2345:2345 # for Debugger
-    security_opt:
-      - apparmor:unconfined # for delve
-    cap_add:
-      - SYS_PTRACE # for delve
