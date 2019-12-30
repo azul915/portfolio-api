@@ -1,2 +1,3 @@
 go.sum
 portfolio*.json
+src/app/portfolio-api

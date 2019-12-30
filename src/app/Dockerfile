@@ -8,5 +8,7 @@ RUN set -ex && \
     apk update && \
     apk add --no-cache git && \
     # go build -o app &&
+    : "for Gin Web Framework" && \
+    go get github.com/gin-gonic/gin && \
     : "for Firebase Admin SDK" && \
     go get firebase.google.com/go
