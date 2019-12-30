@@ -2,11 +2,11 @@ version: '3'
 
 services:
   app:
-    build: ./src/app
+    build: .
     container_name: goapi
-    working_dir: /go/src/app
+    working_dir: /go/src
     volumes:
-        - ./src:/go/src
+        - .:/go/src
     command: go run server.go
     ports:
       - 1999:1999
