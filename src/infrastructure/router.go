@@ -10,7 +10,9 @@ var Router *gin.Engine
 func init() {
 	r := gin.Default()
 
-	// skillController := controllers.NewSkillController()
-	r.GET("/skills", func(c *gin.Context) { controllers.Index(c) })
+	skillController := controllers.NewSkillController()
+
+	r.GET("/skills", func(c *gin.Context) { skillController.Index(c) })
+	
 	Router = r
 }
