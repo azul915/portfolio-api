@@ -11,9 +11,15 @@ var Router *gin.Engine
 func init() {
 	r := gin.Default()
 
-	skillController := controllers.NewSkillController()
-
-	r.GET("/skills", func(c *gin.Context) { skillController.Index("serverside", c) })
+	r.GET("/skills", func(c *gin.Context) { indexOfTerm(c) })
 	
 	Router = r
+}
+
+func indexOfTerm(c *gin.Context) {
+
+	skillController := controllers.NewSkillController()
+	term := c.Query("term")
+	skillController.Index(term, c)
+
 }
