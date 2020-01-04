@@ -1,18 +1,12 @@
-version: '3.5'
+version: '3'
 
 services:
   app:
-    build:
-      context: .
-      target: build
+    build: .
     container_name: goapi
+    working_dir: /go/src
     volumes:
-      - ./:/go/app
-    command: realize start --run --no-config
+        - .:/go/src
+    command: go run server.go
     ports:
-      - 1999:1999 # for WebServer
-      - 2345:2345 # for Debugger
-    security_opt:
-      - apparmor:unconfined # for delve
-    cap_add:
-      - SYS_PTRACE # for delve
+      - 1999:1999

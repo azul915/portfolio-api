@@ -1,27 +1,15 @@
-FROM golang:1.13-alpine as build
+FROM golang:1.13-alpine
 
-WORKDIR /go/app
+WORKDIR /go/src
 
 COPY . .
+
+ENV GO111MODULE=on
 
 RUN set -ex && \
     apk update && \
     apk add --no-cache git && \
-    # go build -o app && 
-    : "for hot reload" && \
-    go get gopkg.in/urfave/cli.v2@master && \
-    go get github.com/oxequa/realize && \
+    : "for Gin Web Framework" && \
+    go get github.com/gin-gonic/gin && \
     : "for Firebase Admin SDK" && \
     go get firebase.google.com/go
-
-FROM alpine
-
-WORKDIR /app
-
-COPY --from=build /go/app/app .
-
-RUN addgroup go \
-  && adduser -D -G go go \
-  && chown -R go:go /app/app
-
-CMD ["./app"]
