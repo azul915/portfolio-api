@@ -5,5 +5,5 @@ import (
 )
 
 type SkillRepository interface {
-	FindAll() (domain.Skills, error)
+	FindAll(string) (domain.Skills, error)
 }

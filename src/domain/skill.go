@@ -1,8 +1,7 @@
 package domain
 
-import (
-	"time"
-)
+import "time"
+
 type Skills []Skill
 
 type Skill struct {

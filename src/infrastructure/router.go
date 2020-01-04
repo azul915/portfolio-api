@@ -1,8 +1,9 @@
 package infrastructure
 
 import (
-	"github.com/azul915/portfolio-api/src/interfaces/controllers"
 	"github.com/gin-gonic/gin"
+
+	"github.com/azul915/portfolio-api/src/interfaces/controllers"
 )
 
 var Router *gin.Engine
@@ -12,7 +13,7 @@ func init() {
 
 	skillController := controllers.NewSkillController()
 
-	r.GET("/skills", func(c *gin.Context) { skillController.Index(c) })
+	r.GET("/skills", func(c *gin.Context) { skillController.Index("serverside", c) })
 	
 	Router = r
 }

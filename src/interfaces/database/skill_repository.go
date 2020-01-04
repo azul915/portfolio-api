@@ -13,10 +13,10 @@ import (
 )
 
 type SkillRepository struct {
-	m map[string]interface{}
+	Val interface{}
 }
 
-func (repo *SkillRepository) FindAll() (skills domain.Skills, err error) {
+func (repo *SkillRepository) FindAll(t string) (skills domain.Skills, err error) {
 
 	ctx := context.Background()
 
@@ -25,7 +25,7 @@ func (repo *SkillRepository) FindAll() (skills domain.Skills, err error) {
 		return
 	}
 
-	data := client.Collection("infrastructure").Documents(ctx)
+	data := client.Collection(t).Documents(ctx)
 
 	docs, err := data.GetAll()
 	if err != nil {
