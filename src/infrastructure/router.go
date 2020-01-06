@@ -19,6 +19,7 @@ func init() {
 func indexOfTerm(c *gin.Context) {
 
 	skillController := controllers.NewSkillController()
+	c.Header("access-control-allow-origin", "*")
 	term := c.Query("term")
 	skillController.Index(term, c)
 
