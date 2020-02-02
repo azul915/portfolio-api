@@ -21,3 +21,15 @@ func (interactor *SkillInteractor) Skills(term string) (skills domain.Skills, er
 	return
 
 }
+
+func (interactor *SkillInteractor) Add(skill domain.Skill) (err error) {
+
+	err = interactor.SkillRepository.Store(skill)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	return
+
+}

@@ -45,6 +45,30 @@ func (repo *SkillRepository) FindAll(t string) (skills domain.Skills, err error)
 
 }
 
+func (repo *SkillRepository) Store(s domain.Skill) (err error) {
+
+	ctx := context.Background()
+
+	client, err := firebaseInit(ctx)
+	if err != nil {
+		return
+	}
+
+	collection := client.Collection(s.Term)
+
+	doc := collection.Doc(s.Name)
+	_, err = doc.Set(ctx, s)
+
+	if err != nil {
+		return
+	}
+
+	defer client.Close()
+
+	return
+
+}
+
 func firebaseInit(ctx context.Context) (*firestore.Client, error) {
 
 	sa := option.WithCredentialsFile("credentials.json")
