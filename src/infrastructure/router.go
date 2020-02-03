@@ -1,7 +1,9 @@
 package infrastructure
 
 import (
+	"net/http"
 	"github.com/gin-gonic/gin"
+	"log"
 
 	"github.com/azul915/portfolio-api/src/interfaces/controllers"
 	"github.com/azul915/portfolio-api/src/domain"
@@ -31,7 +33,14 @@ func createSkill(c *gin.Context) {
 	skillController := controllers.NewSkillController()
 	c.Header("access-control-allow-origin", "*")
 	var skill = domain.Skill{}
-	c.Bind(&skill)
+
+	if err := c.Bind(&skill); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "BadRequest",
+		})
+		return
+	}
+
 	skillController.Create(skill, c)
 
 }

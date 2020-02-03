@@ -43,7 +43,7 @@ func (controller *SkillController) Create(s domain.Skill, c Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "success",
+		"message": "Success",
 	})
 
 }
