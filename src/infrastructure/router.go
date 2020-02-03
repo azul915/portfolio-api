@@ -3,7 +3,6 @@ package infrastructure
 import (
 	"net/http"
 	"github.com/gin-gonic/gin"
-	"log"
 
 	"github.com/azul915/portfolio-api/src/interfaces/controllers"
 	"github.com/azul915/portfolio-api/src/domain"
