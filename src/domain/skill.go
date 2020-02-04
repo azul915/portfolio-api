@@ -20,6 +20,6 @@ type Category struct {
 }
 
 type DelSkill struct {
-	Name      string     `form:"name" json:"name" firestore:"name" binding:"required"`
-	Term      string     `form:"term" json:"term" firestore:"term" binding:"required"`
+	Name string `form:"name" json:"name" firestore:"name" binding:"required"`
+	Term string `form:"term" json:"term" firestore:"term" binding:"required"`
 }
