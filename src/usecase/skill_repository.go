@@ -7,4 +7,5 @@ import (
 type SkillRepository interface {
 	FindAll(string) (domain.Skills, error)
 	Store(domain.Skill) (error)
+	Delete(domain.DelSkill) (error)
 }

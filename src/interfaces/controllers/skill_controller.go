@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"log"
 	"github.com/gin-gonic/gin"
 
 	"github.com/azul915/portfolio-api/src/domain"
@@ -26,6 +27,7 @@ func (controller *SkillController) Index(term string, c Context) {
 
 	skills, err := controller.Interactor.Skills(term)
 	if err != nil {
+		log.Fatalln(err)
 		c.JSON(500, NewError(err))
 		return
 	}
@@ -38,6 +40,22 @@ func (controller *SkillController) Create(s domain.Skill, c Context) {
 
 	err := controller.Interactor.Add(s)
 	if err != nil {
+		log.Fatalln(err)
+		c.JSON(500, NewError(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Success",
+	})
+
+}
+
+func (controller *SkillController) Delete(d domain.DelSkill, c Context) {
+
+	err := controller.Interactor.Delete(d)
+	if err != nil {
+		log.Fatalln(err)
 		c.JSON(500, NewError(err))
 		return
 	}

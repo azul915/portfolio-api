@@ -33,3 +33,15 @@ func (interactor *SkillInteractor) Add(skill domain.Skill) (err error) {
 	return
 
 }
+
+func (interactor *SkillInteractor) Delete(skill domain.DelSkill) (err error) {
+
+	err = interactor.SkillRepository.Delete(skill)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	return
+
+}

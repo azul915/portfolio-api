@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"github.com/gin-gonic/gin"
 
-	"github.com/azul915/portfolio-api/src/interfaces/controllers"
 	"github.com/azul915/portfolio-api/src/domain"
+	"github.com/azul915/portfolio-api/src/interfaces/controllers"
 )
 
 var Router *gin.Engine
@@ -15,6 +15,7 @@ func init() {
 
 	r.GET("/skills", func(c *gin.Context) { indexOfTerm(c) })
 	r.POST("/skill", func(c *gin.Context) { createSkill(c) })
+	r.DELETE("/skill", func(c *gin.Context) { deleteSkill(c) })
 	Router = r
 }
 
@@ -41,5 +42,18 @@ func createSkill(c *gin.Context) {
 	}
 
 	skillController.Create(skill, c)
+
+}
+
+func deleteSkill(c *gin.Context) {
+
+	skillController := controllers.NewSkillController()
+	c.Header("access-control-allow-origin", "*")
+
+	term := c.Query("term")
+	name := c.Query("name")
+	deleteSkill := domain.DelSkill{Name: name, Term: term,}
+
+	skillController.Delete(deleteSkill, c)
 
 }

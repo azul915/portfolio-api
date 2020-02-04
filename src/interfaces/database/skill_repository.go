@@ -69,6 +69,26 @@ func (repo *SkillRepository) Store(s domain.Skill) (err error) {
 
 }
 
+func (repo *SkillRepository) Delete(d domain.DelSkill) (err error) {
+
+	ctx := context.Background()
+
+	client, err := firebaseInit(ctx)
+	if err != nil {
+		return
+	}
+
+	_, err = client.Collection(d.Term).Doc(d.Name).Delete(ctx)
+	if err != nil {
+		return
+	}
+
+	defer client.Close()
+
+	return
+
+}
+
 func firebaseInit(ctx context.Context) (*firestore.Client, error) {
 
 	sa := option.WithCredentialsFile("credentials.json")
