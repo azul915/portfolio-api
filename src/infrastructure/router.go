@@ -23,6 +23,7 @@ func indexOfTerm(c *gin.Context) {
 
 	skillController := controllers.NewSkillController()
 	c.Header("access-control-allow-origin", "*")
+	c.Header("Access-Control-Allow-Methods", "GET")
 	term := c.Query("term")
 	skillController.Index(term, c)
 
@@ -32,7 +33,8 @@ func createSkill(c *gin.Context) {
 
 	skillController := controllers.NewSkillController()
 	c.Header("access-control-allow-origin", "*")
-	var skill = domain.Skill{}
+	c.Header("Access-Control-Allow-Methods", "POST")
+	skill := domain.Skill{}
 
 	if err := c.Bind(&skill); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -49,6 +51,7 @@ func deleteSkill(c *gin.Context) {
 
 	skillController := controllers.NewSkillController()
 	c.Header("access-control-allow-origin", "*")
+	c.Header("Access-Control-Allow-Methods", "DELETE")
 
 	term := c.Query("term")
 	name := c.Query("name")

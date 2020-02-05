@@ -23,3 +23,12 @@ type DelSkill struct {
 	Name string `form:"name" json:"name" firestore:"name" binding:"required"`
 	Term string `form:"term" json:"term" firestore:"term" binding:"required"`
 }
+
+type AddSkill struct {
+	CreatedAt time.Time `form:"created_at" json:"created_at" firestore:"created_at" binding:"required"`
+	Detail    string    `form:"detail" json:"detail" firestore:"detail" binding:"required"`
+	Duration  int64     `form:"duration" json:"duration" firestore:"duration" binding:"required"`
+	Name      string    `form:"name" json:"name" firestore:"name" binding:"required"`
+	SelfEval  int64     `form:"self_evaluation" json:"self_evaluation" firestore:"self_evaluation" binding:"required"`
+	Term      string    `form:"term" json:"term" firestore:"term" firestore:"term" binding:"required"`
+}

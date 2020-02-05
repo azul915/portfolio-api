@@ -54,11 +54,32 @@ func (repo *SkillRepository) Store(s domain.Skill) (err error) {
 		return
 	}
 
-	collection := client.Collection(s.Term)
+	// skill配下のcategoryはネストしているため、domain.Categoryのタグ情報を読み込ませて、
+	// ①categoryを除くプロパティで先にDocumentを作り、②map[string]でマージする
+	as := domain.AddSkill{
+		CreatedAt: s.CreatedAt,
+		Detail: s.Detail,
+		Duration: s.Duration,
+		Name: s.Name,
+		SelfEval: s.SelfEval,
+		Term: s.Term,
+	}
 
-	doc := collection.Doc(s.Name)
-	_, err = doc.Set(ctx, s)
+	doc	:= client.Collection(as.Term).Doc(as.Name)
 
+	// ①categoryを除くプロパティでDocumentを作る
+	_, err = doc.Set(ctx, as)
+	if err != nil {
+		return
+	}
+
+	// ②map[string]でcategoryを同じDocumentにマージする
+	_, err = doc.Set(ctx, map[string]interface{}{
+		"category": map[string]interface{}{
+			"id": s.Category.ID,
+			"name": s.Category.Name,
+		},
+	}, firestore.MergeAll)
 	if err != nil {
 		return
 	}
@@ -107,7 +128,9 @@ func firebaseInit(ctx context.Context) (*firestore.Client, error) {
 
 }
 
-// mapから構造体に変換を行う
+/*
+* mapから構造体に変換を行う
+*/
 func mapToStruct(m map[string]interface{}, val interface{}) error {
 	tmp, err := json.Marshal(m)
 	if err != nil {
