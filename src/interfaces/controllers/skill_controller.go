@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"net/http"
 	"log"
+	"net/http"
 	"github.com/gin-gonic/gin"
 
 	"github.com/azul915/portfolio-api/src/domain"
