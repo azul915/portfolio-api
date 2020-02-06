@@ -36,7 +36,7 @@ func createSkill(c *gin.Context) {
 	c.Header("Access-Control-Allow-Methods", "POST")
 	skill := domain.Skill{}
 
-	if err := c.Bind(&skill); err != nil {
+	if err := c.BindJSON(&skill); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "BadRequest",
 		})
