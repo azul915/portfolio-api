@@ -3,12 +3,14 @@ package infrastructure
 import (
 	"log"
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/azul915/portfolio-api/src/domain"
 	"github.com/azul915/portfolio-api/src/interfaces/controllers"
 )
 
+// Router server.goから呼び出すGinルーター
 var Router *gin.Engine
 
 func init() {
@@ -58,7 +60,7 @@ func deleteSkill(skillController *controllers.SkillController, c *gin.Context) {
 
 	term := c.Query("term")
 	name := c.Query("name")
-	deleteSkill := domain.DelSkill{Name: name, Term: term,}
+	deleteSkill := domain.DelSkill{Name: name, Term: term}
 
 	skillController.Delete(deleteSkill, c)
 
