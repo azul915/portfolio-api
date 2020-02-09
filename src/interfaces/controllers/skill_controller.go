@@ -37,6 +37,19 @@ func (controller *SkillController) IndexByTerm(term string, c Context) {
 
 }
 
+func (controller *SkillController) IndexAll(c Context) {
+
+	skills, err := controller.Interactor.GetAll()
+	if err != nil {
+		log.Fatalln(err)
+		c.JSON(500, NewError(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, skills)
+
+}
+
 func (controller *SkillController) Create(s domain.Skill, c Context) {
 
 	err := controller.Interactor.Add(s)

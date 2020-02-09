@@ -43,6 +43,58 @@ func (repo *SkillRepository) FindSkillsByTerm(t string) (skills domain.Skills, e
 
 }
 
+// GetAll は、termを跨いで全てのコレクションについて取得する
+func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
+
+	ctx := context.Background()
+
+	client, err := firebaseInit(ctx)
+	if err != nil {
+		return
+	}
+
+	serverside := client.Collection("serverside").Documents(ctx)
+	serversideDocs, err := serverside.GetAll()
+	if err != nil {
+		return
+	}
+
+	skills = make(domain.Skills, 0)
+	for _, doc := range serversideDocs {
+		s := new(domain.Skill)
+		mapToStruct(doc.Data(), &s)
+		skills = append(skills, *s)
+	}
+
+	frontend := client.Collection("frontend").Documents(ctx)
+	frontendDocs, err := frontend.GetAll()
+	if err != nil {
+		return
+	}
+
+	for _, doc := range frontendDocs {
+		s := new(domain.Skill)
+		mapToStruct(doc.Data(), &s)
+		skills = append(skills, *s)
+	}
+
+	infrastructure := client.Collection("infrastructure").Documents(ctx)
+	infrastructureDocs, err := infrastructure.GetAll()
+	if err != nil {
+		return
+	}
+
+	for _, doc := range infrastructureDocs {
+		s := new(domain.Skill)
+		mapToStruct(doc.Data(), &s)
+		skills = append(skills, *s)
+	}
+
+	defer client.Close()
+
+	return
+}
+
 // Store は、引数で受け取ったSkillについて、該当するterm（serverside, frontend, infrastructure）のコレクションに、新たなドキュメントを追加する
 func (repo *SkillRepository) Store(s domain.Skill) (err error) {
 

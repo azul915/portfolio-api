@@ -3,6 +3,7 @@ module github.com/azul915/portfolio-api
 go 1.13
 
 require (
+	9fans.net/go v0.0.2 // indirect
 	cloud.google.com/go/firestore v1.1.0
 	cloud.google.com/go/storage v1.4.0 // indirect
 	firebase.google.com/go v3.11.1+incompatible

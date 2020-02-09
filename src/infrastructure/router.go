@@ -18,6 +18,7 @@ func init() {
 
 	s := controllers.NewSkillController()
 	r.GET("/skills", func(c *gin.Context) { indexSkillsByTerm(s, c) })
+	r.GET("/skillsAll", func(c *gin.Context) { indexAllSkills(s, c) })
 	r.POST("/skill", func(c *gin.Context) { createSkill(s, c) })
 	r.DELETE("/skill", func(c *gin.Context) { deleteSkill(s, c) })
 
@@ -36,6 +37,15 @@ func indexSkillsByTerm(skillController *controllers.SkillController, c *gin.Cont
 	term := c.Query("term")
 
 	skillController.IndexByTerm(term, c)
+
+}
+
+func indexAllSkills(skillController *controllers.SkillController, c *gin.Context) {
+
+	c.Header("access-control-allow-origin", "*")
+	c.Header("Access-Control-Allow-Methods", "GET")
+
+	skillController.IndexAll(c)
 
 }
 

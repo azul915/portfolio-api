@@ -22,6 +22,18 @@ func (interactor *SkillInteractor) SkillsByTerm(term string) (skills domain.Skil
 
 }
 
+func (interactor *SkillInteractor) GetAll() (skills domain.Skills, err error) {
+
+	skills, err = interactor.SkillRepository.GetAll()
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return
+
+}
+
 func (interactor *SkillInteractor) Add(skill domain.Skill) (err error) {
 
 	err = interactor.SkillRepository.Store(skill)
