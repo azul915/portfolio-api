@@ -13,8 +13,8 @@ type SkillRepository struct {
 	Val interface{}
 }
 
-// FindAll は、引数で受け取ったterm(serverside, frontend, infrastructure)のコレクションについて全てを取得する
-func (repo *SkillRepository) FindAll(t string) (skills domain.Skills, err error) {
+// FindSkillsByTerm は、引数で受け取ったterm(serverside, frontend, infrastructure)のコレクションについて全てを取得する
+func (repo *SkillRepository) FindSkillsByTerm(t string) (skills domain.Skills, err error) {
 
 	ctx := context.Background()
 

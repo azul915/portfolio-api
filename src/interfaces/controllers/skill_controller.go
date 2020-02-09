@@ -3,6 +3,7 @@ package controllers
 import (
 	"log"
 	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/azul915/portfolio-api/src/domain"
@@ -16,16 +17,16 @@ type SkillController struct {
 
 func NewSkillController() *SkillController {
 
-	return &SkillController {
-		Interactor: usecase.SkillInteractor {
-			SkillRepository: &database.SkillRepository {},
+	return &SkillController{
+		Interactor: usecase.SkillInteractor{
+			SkillRepository: &database.SkillRepository{},
 		},
 	}
 }
 
-func (controller *SkillController) Index(term string, c Context) {
+func (controller *SkillController) IndexByTerm(term string, c Context) {
 
-	skills, err := controller.Interactor.Skills(term)
+	skills, err := controller.Interactor.SkillsByTerm(term)
 	if err != nil {
 		log.Fatalln(err)
 		c.JSON(500, NewError(err))

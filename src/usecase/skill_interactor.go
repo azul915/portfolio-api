@@ -10,9 +10,9 @@ type SkillInteractor struct {
 	SkillRepository SkillRepository
 }
 
-func (interactor *SkillInteractor) Skills(term string) (skills domain.Skills, err error) {
+func (interactor *SkillInteractor) SkillsByTerm(term string) (skills domain.Skills, err error) {
 
-	skills, err = interactor.SkillRepository.FindAll(term)
+	skills, err = interactor.SkillRepository.FindSkillsByTerm(term)
 
 	if err != nil {
 		log.Println(err)
