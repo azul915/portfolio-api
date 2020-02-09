@@ -6,10 +6,12 @@ import (
 	"github.com/azul915/portfolio-api/src/domain"
 )
 
+// ProductRepository は、ProductドメインについてCloudFirestoreとのやり取りを担うRepository
 type ProductRepository struct {
 	Val interface{}
 }
 
+// FindAll は、全ての「products」コレクションを取得する
 func (repo *ProductRepository) FindAll() (products domain.Products, err error) {
 
 	ctx := context.Background()

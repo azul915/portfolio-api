@@ -8,10 +8,12 @@ import (
 	"github.com/azul915/portfolio-api/src/domain"
 )
 
+// SkillRepository は、SkillドメインについてCloudFirestoreとのやり取りを担うRepository
 type SkillRepository struct {
 	Val interface{}
 }
 
+// FindAll 引数で受け取ったterm(serverside, frontend, infrastructure)のコレクションについて全てを取得する
 func (repo *SkillRepository) FindAll(t string) (skills domain.Skills, err error) {
 
 	ctx := context.Background()

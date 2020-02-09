@@ -10,7 +10,7 @@ import (
 	"github.com/azul915/portfolio-api/src/interfaces/controllers"
 )
 
-// Router server.goから呼び出すGinルーター
+// Router は、server.goから呼び出すGinルーター
 var Router *gin.Engine
 
 func init() {
