@@ -20,6 +20,10 @@ func init() {
 	r.GET("/skills", func(c *gin.Context) { indexOfTerm(s, c) })
 	r.POST("/skill", func(c *gin.Context) { createSkill(s, c) })
 	r.DELETE("/skill", func(c *gin.Context) { deleteSkill(s, c) })
+
+	p := controllers.NewProductController()
+	r.GET("/products", func(c *gin.Context) { index(p, c) })
+
 	Router = r
 
 }
@@ -63,5 +67,14 @@ func deleteSkill(skillController *controllers.SkillController, c *gin.Context) {
 	deleteSkill := domain.DelSkill{Name: name, Term: term}
 
 	skillController.Delete(deleteSkill, c)
+
+}
+
+func index(productController *controllers.ProductController, c *gin.Context) {
+
+	c.Header("access-control-allow-origin", "*")
+	c.Header("Access-Control-Allow-Methods", "GET")
+
+	productController.Index(c)
 
 }

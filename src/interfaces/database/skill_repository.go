@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"cloud.google.com/go/firestore"
-	"firebase.google.com/go"
+	firebase "firebase.google.com/go"
 	"google.golang.org/api/option"
 
 	"github.com/azul915/portfolio-api/src/domain"
@@ -58,14 +58,14 @@ func (repo *SkillRepository) Store(s domain.Skill) (err error) {
 	// ①categoryを除くプロパティで先にDocumentを作り、②map[string]でマージする
 	as := domain.AddSkill{
 		CreatedAt: s.CreatedAt,
-		Detail: s.Detail,
-		Duration: s.Duration,
-		Name: s.Name,
-		SelfEval: s.SelfEval,
-		Term: s.Term,
+		Detail:    s.Detail,
+		Duration:  s.Duration,
+		Name:      s.Name,
+		SelfEval:  s.SelfEval,
+		Term:      s.Term,
 	}
 
-	doc	:= client.Collection(as.Term).Doc(as.Name)
+	doc := client.Collection(as.Term).Doc(as.Name)
 
 	// ①categoryを除くプロパティでDocumentを作る
 	_, err = doc.Set(ctx, as)
@@ -76,7 +76,7 @@ func (repo *SkillRepository) Store(s domain.Skill) (err error) {
 	// ②map[string]でcategoryを同じDocumentにマージする
 	_, err = doc.Set(ctx, map[string]interface{}{
 		"category": map[string]interface{}{
-			"id": s.Category.ID,
+			"id":   s.Category.ID,
 			"name": s.Category.Name,
 		},
 	}, firestore.MergeAll)
@@ -130,7 +130,7 @@ func firebaseInit(ctx context.Context) (*firestore.Client, error) {
 
 /*
 * mapから構造体に変換を行う
-*/
+ */
 func mapToStruct(m map[string]interface{}, val interface{}) error {
 	tmp, err := json.Marshal(m)
 	if err != nil {
