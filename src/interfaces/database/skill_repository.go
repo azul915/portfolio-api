@@ -13,7 +13,7 @@ type SkillRepository struct {
 	Val interface{}
 }
 
-// FindAll 引数で受け取ったterm(serverside, frontend, infrastructure)のコレクションについて全てを取得する
+// FindAll は、引数で受け取ったterm(serverside, frontend, infrastructure)のコレクションについて全てを取得する
 func (repo *SkillRepository) FindAll(t string) (skills domain.Skills, err error) {
 
 	ctx := context.Background()
@@ -43,6 +43,7 @@ func (repo *SkillRepository) FindAll(t string) (skills domain.Skills, err error)
 
 }
 
+// Store は、引数で受け取ったSkillについて、該当するterm（serverside, frontend, infrastructure）のコレクションに、新たなドキュメントを追加する
 func (repo *SkillRepository) Store(s domain.Skill) (err error) {
 
 	ctx := context.Background()
@@ -88,6 +89,7 @@ func (repo *SkillRepository) Store(s domain.Skill) (err error) {
 
 }
 
+// Delete は、引数で受け取った値を「domain.DelSkill.Term, domain.DelSkill.Name」として、該当するコレクション内のドキュメントを削除する
 func (repo *SkillRepository) Delete(d domain.DelSkill) (err error) {
 
 	ctx := context.Background()
