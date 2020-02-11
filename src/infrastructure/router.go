@@ -17,10 +17,8 @@ func init() {
 	r := gin.Default()
 
 	s := controllers.NewSkillController()
-	// TODO: pathparamに変更 r.GET("/skills/byTerm"
-	r.GET("/skills", func(c *gin.Context) { indexSkillsByTerm(s, c) })
-	// TODO: r.GET("/skills"
-	r.GET("/skillsAll", func(c *gin.Context) { indexAllSkills(s, c) })
+	r.GET("/skills/:term", func(c *gin.Context) { indexSkillsByTerm(s, c) })
+	r.GET("/skills", func(c *gin.Context) { indexAllSkills(s, c) })
 	r.POST("/skill", func(c *gin.Context) { createSkill(s, c) })
 	r.DELETE("/skill", func(c *gin.Context) { deleteSkill(s, c) })
 
@@ -36,7 +34,7 @@ func indexSkillsByTerm(skillController *controllers.SkillController, c *gin.Cont
 	c.Header("access-control-allow-origin", "*")
 	c.Header("Access-Control-Allow-Methods", "GET")
 
-	term := c.Query("term")
+	term := c.Param("term")
 
 	skillController.IndexByTerm(term, c)
 
