@@ -11,8 +11,8 @@ type ProductRepository struct {
 	Val interface{}
 }
 
-// FindAll は、全ての「products」コレクションを取得する
-func (repo *ProductRepository) FindAll() (products domain.Products, err error) {
+// GetAll は、全ての「products」コレクションを取得する
+func (repo *ProductRepository) GetAll() (products domain.Products, err error) {
 
 	ctx := context.Background()
 
@@ -21,6 +21,7 @@ func (repo *ProductRepository) FindAll() (products domain.Products, err error) {
 		return
 	}
 
+	// TODO: orderBy('created_at', 'asc')で取得する
 	data := client.Collection("products").Documents(ctx)
 
 	docs, err := data.GetAll()

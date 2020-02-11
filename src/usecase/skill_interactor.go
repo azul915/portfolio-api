@@ -24,8 +24,8 @@ func (interactor *SkillInteractor) SkillsByTerm(term string) (skills domain.Skil
 
 }
 
-// GetAll は、database層のSkillRepositoryのGetAllを呼び出す
-func (interactor *SkillInteractor) GetAll() (skills domain.Skills, err error) {
+// Skills は、database層のSkillRepositoryのGetAllを呼び出す
+func (interactor *SkillInteractor) Skills() (skills domain.Skills, err error) {
 
 	skills, err = interactor.SkillRepository.GetAll()
 

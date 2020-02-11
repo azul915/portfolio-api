@@ -37,9 +37,9 @@ func (controller *SkillController) IndexByTerm(term string, c Context) {
 
 }
 
-func (controller *SkillController) IndexAll(c Context) {
+func (controller *SkillController) Index(c Context) {
 
-	skills, err := controller.Interactor.GetAll()
+	skills, err := controller.Interactor.Skills()
 	if err != nil {
 		log.Fatalln(err)
 		c.JSON(500, NewError(err))

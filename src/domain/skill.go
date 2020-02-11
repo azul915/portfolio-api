@@ -11,9 +11,11 @@ type Skill struct {
 	Duration  int64     `json:"duration"`
 	Name      string    `json:"name"`
 	SelfEval  int64     `json:"self_evaluation"`
-	Term      string    `json:"term"`
+	// TODO: Enumで実装
+	Term string `json:"term"`
 }
 
+// TODO: Enumで実装
 type Category struct {
 	ID   int64  `json:"id"`
 	Name string `json:"name"`
@@ -30,5 +32,6 @@ type AddSkill struct {
 	Duration  int64     `firestore:"duration" binding:"required"`
 	Name      string    `firestore:"name" binding:"required"`
 	SelfEval  int64     `firestore:"self_evaluation" binding:"required"`
-	Term      string    `firestore:"term" binding:"required"`
+	// TODO: Enumで実装
+	Term string `firestore:"term" binding:"required"`
 }

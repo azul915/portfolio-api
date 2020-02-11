@@ -4,5 +4,5 @@ import "github.com/azul915/portfolio-api/src/domain"
 
 // ProductRepository は、database層のProductRepositoryのInterface
 type ProductRepository interface {
-	FindAll() (domain.Products, error)
+	GetAll() (domain.Products, error)
 }

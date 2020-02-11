@@ -14,7 +14,7 @@ type ProductInteractor struct {
 // Products は、database層のProductRepositoryが集める全ての「products」コレクションを呼び出す
 func (interactor *ProductInteractor) Products() (products domain.Products, err error) {
 
-	products, err = interactor.ProductRepository.FindAll()
+	products, err = interactor.ProductRepository.GetAll()
 
 	if err != nil {
 		log.Println(err)

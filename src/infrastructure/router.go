@@ -17,13 +17,15 @@ func init() {
 	r := gin.Default()
 
 	s := controllers.NewSkillController()
+	// TODO: pathparamに変更 r.GET("/skills/byTerm"
 	r.GET("/skills", func(c *gin.Context) { indexSkillsByTerm(s, c) })
+	// TODO: r.GET("/skills"
 	r.GET("/skillsAll", func(c *gin.Context) { indexAllSkills(s, c) })
 	r.POST("/skill", func(c *gin.Context) { createSkill(s, c) })
 	r.DELETE("/skill", func(c *gin.Context) { deleteSkill(s, c) })
 
 	p := controllers.NewProductController()
-	r.GET("/products", func(c *gin.Context) { index(p, c) })
+	r.GET("/products", func(c *gin.Context) { indexAllProducts(p, c) })
 
 	Router = r
 
@@ -45,7 +47,7 @@ func indexAllSkills(skillController *controllers.SkillController, c *gin.Context
 	c.Header("access-control-allow-origin", "*")
 	c.Header("Access-Control-Allow-Methods", "GET")
 
-	skillController.IndexAll(c)
+	skillController.Index(c)
 
 }
 
@@ -80,7 +82,7 @@ func deleteSkill(skillController *controllers.SkillController, c *gin.Context) {
 
 }
 
-func index(productController *controllers.ProductController, c *gin.Context) {
+func indexAllProducts(productController *controllers.ProductController, c *gin.Context) {
 
 	c.Header("access-control-allow-origin", "*")
 	c.Header("Access-Control-Allow-Methods", "GET")
