@@ -13,8 +13,8 @@ type SkillRepository struct {
 	Val interface{}
 }
 
-// FindSkillsByTerm は、引数で受け取ったterm(serverside, frontend, infrastructure)のコレクションについて全てを取得する
-func (repo *SkillRepository) FindSkillsByTerm(t string) (skills domain.Skills, err error) {
+// GetByTerm は、引数で受け取ったterm(serverside, frontend, infrastructure)のコレクションについて全てを取得する
+func (repo *SkillRepository) GetByTerm(t string) (skills domain.Skills, err error) {
 
 	ctx := context.Background()
 
@@ -23,6 +23,7 @@ func (repo *SkillRepository) FindSkillsByTerm(t string) (skills domain.Skills, e
 		return
 	}
 
+	// TODO: コレクションをカテゴリー順/asc, 自己評価/descでソート、取得
 	data := client.Collection(t).Documents(ctx)
 
 	docs, err := data.GetAll()
@@ -53,6 +54,7 @@ func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
 		return
 	}
 
+	// TODO: ["serverside", "frontend", "infrastrucure"]で回しながらGetAllとskillsへのappendを行う
 	serverside := client.Collection("serverside").Documents(ctx)
 	serversideDocs, err := serverside.GetAll()
 	if err != nil {

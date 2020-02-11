@@ -12,7 +12,7 @@ type SkillInteractor struct {
 
 func (interactor *SkillInteractor) SkillsByTerm(term string) (skills domain.Skills, err error) {
 
-	skills, err = interactor.SkillRepository.FindSkillsByTerm(term)
+	skills, err = interactor.SkillRepository.GetByTerm(term)
 
 	if err != nil {
 		log.Println(err)
