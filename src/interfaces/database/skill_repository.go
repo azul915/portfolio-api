@@ -23,8 +23,11 @@ func (repo *SkillRepository) GetByTerm(t string) (skills domain.Skills, err erro
 		return
 	}
 
-	// TODO: コレクションをカテゴリー順/asc, 自己評価/descでソート、取得
-	data := client.Collection(t).Documents(ctx)
+	// コレクションをカテゴリー順/asc, 自己評価/descでソート、取得
+	data := client.Collection(t).
+		OrderBy("category", firestore.Asc).
+		OrderBy("self_evaluation", firestore.Desc).
+		Documents(ctx)
 
 	docs, err := data.GetAll()
 	if err != nil {
@@ -55,7 +58,12 @@ func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
 	}
 
 	// TODO: ["serverside", "frontend", "infrastrucure"]で回しながらGetAllとskillsへのappendを行う
-	serverside := client.Collection("serverside").Documents(ctx)
+	// 「serverside」コレクションをカテゴリー順/asc, 自己評価/descでソート、取得
+	serverside := client.Collection("serverside").
+		OrderBy("category", firestore.Asc).
+		OrderBy("self_evaluation", firestore.Desc).
+		Documents(ctx)
+
 	serversideDocs, err := serverside.GetAll()
 	if err != nil {
 		return
@@ -68,7 +76,12 @@ func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
 		skills = append(skills, *s)
 	}
 
-	frontend := client.Collection("frontend").Documents(ctx)
+	// 「frontend」コレクションをカテゴリー順/asc, 自己評価/descでソート、取得
+	frontend := client.Collection("frontend").
+		OrderBy("category", firestore.Asc).
+		OrderBy("self_evaluation", firestore.Desc).
+		Documents(ctx)
+
 	frontendDocs, err := frontend.GetAll()
 	if err != nil {
 		return
@@ -80,7 +93,12 @@ func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
 		skills = append(skills, *s)
 	}
 
-	infrastructure := client.Collection("infrastructure").Documents(ctx)
+	// 「infrastructure」コレクションをカテゴリー順/asc, 自己評価/descでソート、取得
+	infrastructure := client.Collection("infrastructure").
+		OrderBy("category", firestore.Asc).
+		OrderBy("self_evaluation", firestore.Desc).
+		Documents(ctx)
+
 	infrastructureDocs, err := infrastructure.GetAll()
 	if err != nil {
 		return
@@ -95,6 +113,7 @@ func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
 	defer client.Close()
 
 	return
+
 }
 
 // Store は、引数で受け取ったSkillについて、該当するterm（serverside, frontend, infrastructure）のコレクションに、新たなドキュメントを追加する

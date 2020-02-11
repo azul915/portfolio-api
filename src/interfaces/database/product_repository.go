@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 
+	"cloud.google.com/go/firestore"
 	"github.com/azul915/portfolio-api/src/domain"
 )
 
@@ -21,8 +22,8 @@ func (repo *ProductRepository) GetAll() (products domain.Products, err error) {
 		return
 	}
 
-	// TODO: orderBy('created_at', 'asc')で取得する
-	data := client.Collection("products").Documents(ctx)
+	// 「products」コレクションをcreated_at/ascで取得
+	data := client.Collection("products").OrderBy("created_at", firestore.Asc).Documents(ctx)
 
 	docs, err := data.GetAll()
 	if err != nil {
