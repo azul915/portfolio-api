@@ -12,3 +12,7 @@ type Product struct {
 	GithubUrl string    `json:"githuburl"`
 	CreatedAt time.Time `json:"created_at"`
 }
+
+type DelProduct struct {
+	Name string `firestore:"name" binding:"required"`
+}

@@ -24,6 +24,8 @@ func init() {
 
 	p := controllers.NewProductController()
 	r.GET("/products", func(c *gin.Context) { indexAllProducts(p, c) })
+	// TODO: r.POST("/product", func(c *gin.Context) { createProduct(p, c) })
+	r.DELETE("/product", func(c *gin.Context) { deleteProduct(p, c) })
 
 	Router = r
 
@@ -87,4 +89,15 @@ func indexAllProducts(productController *controllers.ProductController, c *gin.C
 
 	productController.Index(c)
 
+}
+
+func deleteProduct(productController *controllers.ProductController, c *gin.Context) {
+
+	c.Header("access-control-allow-origin", "*")
+	c.Header("Access-Control-Allow-Methods", "DELETE")
+
+	name := c.Query("name")
+	deleteProduct := domain.DelProduct{Name: name}
+
+	productController.Delete(deleteProduct, c)
 }

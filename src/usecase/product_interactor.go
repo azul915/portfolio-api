@@ -23,3 +23,16 @@ func (interactor *ProductInteractor) Products() (products domain.Products, err e
 	return
 
 }
+
+// Delete は、database層のProductRepositoryのDeleteを呼び出す
+func (interactor *ProductInteractor) Delete(product domain.DelProduct) (err error){
+
+	err = interactor.ProductRepository.Delete(product)
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	return
+
+}

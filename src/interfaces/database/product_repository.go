@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"cloud.google.com/go/firestore"
+
 	"github.com/azul915/portfolio-api/src/domain"
 )
 
@@ -35,6 +36,27 @@ func (repo *ProductRepository) GetAll() (products domain.Products, err error) {
 		p := new(domain.Product)
 		mapToStruct(doc.Data(), &p)
 		products = append(products, *p)
+	}
+
+	defer client.Close()
+
+	return
+
+}
+
+// Delete は、引数で受け取った値を「domain.DelProduct.Name」として、該当するドキュメントを削除する
+func (repo *ProductRepository) Delete(d domain.DelProduct) (err error) {
+
+	ctx := context.Background()
+
+	client, err := firebaseInit(ctx)
+	if err != nil {
+		return
+	}
+
+	_, err = client.Collection("products").Doc(d.Name).Delete(ctx)
+	if err != nil {
+		return
 	}
 
 	defer client.Close()
