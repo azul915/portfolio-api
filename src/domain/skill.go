@@ -2,8 +2,10 @@ package domain
 
 import "time"
 
+// Skills は、Skillのarray
 type Skills []Skill
 
+// Skill は、Category, CreatedAt, Detail, Duraition, Name, SelfEval, Term を持つ struct
 type Skill struct {
 	Category  Category  `json:"category"`
 	CreatedAt time.Time `json:"created_at"`
@@ -16,16 +18,19 @@ type Skill struct {
 }
 
 // TODO: Enumで実装
+// Category は、ID, Name を持つ struct
 type Category struct {
 	ID   int64  `json:"id"`
 	Name string `json:"name"`
 }
 
+// DelSkill は、NameとTerm を持つ struct
 type DelSkill struct {
 	Name string `firestore:"name" binding:"required"`
 	Term string `firestore:"term" binding:"required"`
 }
 
+// AddSkill は、CreatedAt, Detail, Duraition, Name, SelfEval, Term を持つ struct
 type AddSkill struct {
 	CreatedAt time.Time `firestore:"created_at" binding:"required"`
 	Detail    string    `firestore:"detail" binding:"required"`
