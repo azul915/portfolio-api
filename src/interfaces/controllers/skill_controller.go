@@ -11,10 +11,12 @@ import (
 	"github.com/azul915/portfolio-api/src/usecase"
 )
 
+// SkillController は、usecase.ProductInteractor をDIした struct
 type SkillController struct {
 	Interactor usecase.SkillInteractor
 }
 
+// NewSkillController は、EntityをDIしたUseCaseをDIしたSkillController
 func NewSkillController() *SkillController {
 
 	return &SkillController{
@@ -24,6 +26,7 @@ func NewSkillController() *SkillController {
 	}
 }
 
+// IndexByTerm は、usecase.SkillInteractorのSkillsByTermメソッドの呼び出しを行う
 func (controller *SkillController) IndexByTerm(term string, c Context) {
 
 	skills, err := controller.Interactor.SkillsByTerm(term)
@@ -37,6 +40,7 @@ func (controller *SkillController) IndexByTerm(term string, c Context) {
 
 }
 
+// Index は、usecase.SkillInteractorのSkillsの呼び出しを行う
 func (controller *SkillController) Index(c Context) {
 
 	skills, err := controller.Interactor.Skills()
@@ -50,6 +54,7 @@ func (controller *SkillController) Index(c Context) {
 
 }
 
+// Create は、usecase.SkillInteractorのAddの呼び出しを行う
 func (controller *SkillController) Create(s domain.Skill, c Context) {
 
 	err := controller.Interactor.Add(s)
@@ -65,6 +70,7 @@ func (controller *SkillController) Create(s domain.Skill, c Context) {
 
 }
 
+// Delete は、usercase.SkillInteractorのDeleteの呼び出しを行う
 func (controller *SkillController) Delete(d domain.DelSkill, c Context) {
 
 	err := controller.Interactor.Delete(d)

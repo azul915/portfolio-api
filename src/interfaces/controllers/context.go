@@ -1,5 +1,6 @@
 package controllers
 
+// Context は、gin.ContextのInterface
 type Context interface {
 	Param(string) string
 	Bind(interface{}) error

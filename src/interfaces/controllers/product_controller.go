@@ -16,7 +16,7 @@ type ProductController struct {
 	Interactor usecase.ProductInteractor
 }
 
-// NewProductController は、EntityをDIしたUseCaseをDIしたProductController
+// NewProductController は、ProductController を返す
 func NewProductController() *ProductController {
 
 	return &ProductController{
