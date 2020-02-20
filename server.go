@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/azul915/portfolio-api/src/infrastructure"
+	"portfolio-api/api/infrastructure"
 )
 
 func main() {

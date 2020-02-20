@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"github.com/azul915/portfolio-api/src/domain"
+	"portfolio-api/api/domain"
 )
 
 // SkillRepository は、database層のSkillRepositoryのInterface

@@ -3,7 +3,7 @@ package usecase
 import (
 	"log"
 
-	"github.com/azul915/portfolio-api/src/domain"
+	"portfolio-api/api/domain"
 )
 
 // ProductInteractor は、ProductRepositoryを注入したInteractor

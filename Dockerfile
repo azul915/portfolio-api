@@ -1,15 +1,11 @@
-FROM golang:1.13-alpine
+FROM golang:latest
 
 WORKDIR /go/src
 
-COPY . .
-
 ENV GO111MODULE=on
 
-RUN set -ex && \
-    apk update && \
-    apk add --no-cache git && \
-    : "for Gin Web Framework" && \
-    go get github.com/gin-gonic/gin && \
-    : "for Firebase Admin SDK" && \
-    go get firebase.google.com/go
+ADD ./api ./api
+ADD server.go .
+ADD credentials.json .
+ADD go.mod .
+ADD go.sum .

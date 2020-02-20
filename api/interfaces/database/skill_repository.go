@@ -5,7 +5,7 @@ import (
 
 	"cloud.google.com/go/firestore"
 
-	"github.com/azul915/portfolio-api/src/domain"
+	"portfolio-api/api/domain"
 )
 
 // SkillRepository は、SkillドメインについてCloudFirestoreとのやり取りを担うRepository

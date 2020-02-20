@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/azul915/portfolio-api/src/domain"
-	"github.com/azul915/portfolio-api/src/interfaces/controllers"
+	"portfolio-api/api/domain"
+	"portfolio-api/api/interfaces/controllers"
 )
 
 // Router は、server.goから呼び出すGinルーター

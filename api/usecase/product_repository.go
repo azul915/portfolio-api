@@ -1,6 +1,6 @@
 package usecase
 
-import "github.com/azul915/portfolio-api/src/domain"
+import "portfolio-api/api/domain"
 
 // ProductRepository は、database層のProductRepositoryのInterface
 type ProductRepository interface {

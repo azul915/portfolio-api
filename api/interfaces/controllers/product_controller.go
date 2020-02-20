@@ -6,9 +6,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/azul915/portfolio-api/src/domain"
-	"github.com/azul915/portfolio-api/src/interfaces/database"
-	"github.com/azul915/portfolio-api/src/usecase"
+	"portfolio-api/api/domain"
+	"portfolio-api/api/interfaces/database"
+	"portfolio-api/api/usecase"
 )
 
 // ProductController は、usecase.ProductInteractor をDIした struct
