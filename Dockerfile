@@ -38,10 +38,14 @@ COPY go.sum .
 COPY ./api ./api
 COPY server.go .
 COPY credentials.json .
-COPY .realize.yaml .
+
 RUN set -ex && \
+    apk update && \
     apk add --no-cache git && \
-    go get -u github.com/tockins/realize
+    : "for Gin Web Framework" && \
+    go get github.com/gin-gonic/gin && \
+    : "for Firebase Admin SDK" && \
+    go get firebase.google.com/go
 
 EXPOSE 1999
-# CMD [ "/bin/sh", "realize start" ]
+CMD [ "go", "run", "server.go" ]

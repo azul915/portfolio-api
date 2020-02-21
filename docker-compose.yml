@@ -7,12 +7,7 @@ services:
       dockerfile: ./Dockerfile
       target: dev
     container_name: goapi
-    environment: 
-      HOST: 0.0.0.0
-      PORT: '1999'
     volumes:
       - ./:/go/src
-    stdin_open: true
-    tty: true
     ports:
       - 1999:1999
