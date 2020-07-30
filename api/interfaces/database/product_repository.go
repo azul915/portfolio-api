@@ -44,6 +44,38 @@ func (repo *ProductRepository) GetAll() (products domain.Products, err error) {
 
 }
 
+// Store は、引数で受け取ったProductについて、新たなドキュメントを追加する
+func (repo *ProductRepository) Store(p domain.Product) (err error) {
+
+	ctx := context.Background()
+
+	client, err := firebaseInit(ctx)
+	if err != nil {
+		return
+	}
+
+	cp := domain.Product{
+		Name:      p.Name,
+		DemoURL:   p.DemoURL,
+		Feature:   p.Feature,
+		Effort:    p.Effort,
+		GithubURL: p.GithubURL,
+		CreatedAt: p.CreatedAt,
+	}
+	// Document "product" 作成
+	doc := client.Collection("Product").Doc(cp.Name)
+
+	_, err = doc.Set(ctx, cp)
+	if err != nil {
+		return
+	}
+
+	defer client.Close()
+
+	return
+
+}
+
 // Delete は、引数で受け取った値を「domain.DelProduct.Name」として、該当するドキュメントを削除する
 func (repo *ProductRepository) Delete(d domain.DelProduct) (err error) {
 

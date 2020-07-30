@@ -39,6 +39,22 @@ func (controller *ProductController) Index(c Context) {
 	c.JSON(http.StatusOK, products)
 }
 
+// Create は、usecase.ProductInteractorのAddの呼び出しを行う
+func (controller *ProductController) Create(cp domain.Product, c Context) {
+
+	err := controller.Interactor.Add(cp)
+	if err != nil {
+		log.Fatalln(err)
+		c.JSON(500, NewError(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Success",
+	})
+
+}
+
 // Delete は、usecase.ProductInteractorのDeleteメソッドの呼び出しを行う
 func (controller *ProductController) Delete(d domain.DelProduct, c Context) {
 
