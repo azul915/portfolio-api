@@ -1,13 +1,13 @@
 package usecase
 
 import (
-	"portfolio-api/api/domain"
+	"portfolio-api/api/domain/skill"
 )
 
 // SkillRepository は、database層のSkillRepositoryのInterface
 type SkillRepository interface {
-	GetByTerm(string) (domain.Skills, error)
-	GetAll() (domain.Skills, error)
-	Store(domain.ReqSkill) error
-	Delete(domain.DelSkill) error
+	GetByTerm(string) (skill.Skills, error)
+	GetAll() (skill.Skills, error)
+	Store(skill.ReqSkill) error
+	Delete(skill.DelSkill) error
 }

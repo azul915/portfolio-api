@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"portfolio-api/api/domain"
+	"portfolio-api/api/domain/skill"
 	"portfolio-api/api/interfaces/database"
 	"portfolio-api/api/usecase"
 )
@@ -55,7 +55,7 @@ func (controller *SkillController) Index(c Context) {
 }
 
 // Create は、usecase.SkillInteractorのAddの呼び出しを行う
-func (controller *SkillController) Create(s domain.ReqSkill, c Context) {
+func (controller *SkillController) Create(s skill.ReqSkill, c Context) {
 
 	err := controller.Interactor.Add(s)
 	if err != nil {
@@ -71,7 +71,7 @@ func (controller *SkillController) Create(s domain.ReqSkill, c Context) {
 }
 
 // Delete は、usercase.SkillInteractorのDeleteの呼び出しを行う
-func (controller *SkillController) Delete(d domain.DelSkill, c Context) {
+func (controller *SkillController) Delete(d skill.DelSkill, c Context) {
 
 	err := controller.Interactor.Delete(d)
 	if err != nil {

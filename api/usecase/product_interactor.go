@@ -3,7 +3,7 @@ package usecase
 import (
 	"log"
 
-	"portfolio-api/api/domain"
+	"portfolio-api/api/domain/product"
 )
 
 // ProductInteractor は、ProductRepositoryを注入したInteractor
@@ -12,7 +12,7 @@ type ProductInteractor struct {
 }
 
 // Products は、database層のProductRepositoryが集める全ての「products」コレクションを呼び出す
-func (interactor *ProductInteractor) Products() (products domain.Products, err error) {
+func (interactor *ProductInteractor) Products() (products product.Products, err error) {
 
 	products, err = interactor.ProductRepository.GetAll()
 
@@ -25,7 +25,7 @@ func (interactor *ProductInteractor) Products() (products domain.Products, err e
 }
 
 // Add は、database層のProductRepositoryのStoreを呼び出す
-func (interactor *ProductInteractor) Add(product domain.ReqProduct) (err error) {
+func (interactor *ProductInteractor) Add(product product.ReqProduct) (err error) {
 
 	err = interactor.ProductRepository.Store(product)
 
@@ -37,7 +37,7 @@ func (interactor *ProductInteractor) Add(product domain.ReqProduct) (err error) 
 }
 
 // Delete は、database層のProductRepositoryのDeleteを呼び出す
-func (interactor *ProductInteractor) Delete(product domain.DelProduct) (err error) {
+func (interactor *ProductInteractor) Delete(product product.DelProduct) (err error) {
 
 	err = interactor.ProductRepository.Delete(product)
 

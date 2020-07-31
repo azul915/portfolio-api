@@ -6,7 +6,7 @@ import (
 
 	"cloud.google.com/go/firestore"
 
-	"portfolio-api/api/domain"
+	"portfolio-api/api/domain/product"
 )
 
 // ProductRepository は、ProductドメインについてCloudFirestoreとのやり取りを担うRepository
@@ -15,7 +15,7 @@ type ProductRepository struct {
 }
 
 // GetAll は、全ての「products」コレクションを取得する
-func (repo *ProductRepository) GetAll() (products domain.Products, err error) {
+func (repo *ProductRepository) GetAll() (products product.Products, err error) {
 
 	ctx := context.Background()
 
@@ -32,9 +32,9 @@ func (repo *ProductRepository) GetAll() (products domain.Products, err error) {
 		return
 	}
 
-	products = make(domain.Products, 0)
+	products = make(product.Products, 0)
 	for _, doc := range docs {
-		p := new(domain.Product)
+		p := new(product.Product)
 		mapToStruct(doc.Data(), &p)
 		products = append(products, *p)
 	}
@@ -46,7 +46,7 @@ func (repo *ProductRepository) GetAll() (products domain.Products, err error) {
 }
 
 // Store は、引数で受け取ったProductについて、新たなドキュメントを追加する
-func (repo *ProductRepository) Store(rp domain.ReqProduct) (err error) {
+func (repo *ProductRepository) Store(rp product.ReqProduct) (err error) {
 
 	ctx := context.Background()
 
@@ -55,7 +55,7 @@ func (repo *ProductRepository) Store(rp domain.ReqProduct) (err error) {
 		return
 	}
 
-	ap := domain.AddProduct{
+	ap := product.AddProduct{
 		CreatedAt: time.Now(),
 		DemoURL:   rp.DemoURL,
 		Effort:    rp.DemoURL,
@@ -78,8 +78,8 @@ func (repo *ProductRepository) Store(rp domain.ReqProduct) (err error) {
 
 }
 
-// Delete は、引数で受け取った値を「domain.DelProduct.Name」として、該当するドキュメントを削除する
-func (repo *ProductRepository) Delete(d domain.DelProduct) (err error) {
+// Delete は、引数で受け取った値を「product.DelProduct.Name」として、該当するドキュメントを削除する
+func (repo *ProductRepository) Delete(d product.DelProduct) (err error) {
 
 	ctx := context.Background()
 

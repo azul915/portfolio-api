@@ -6,7 +6,7 @@ import (
 
 	"cloud.google.com/go/firestore"
 
-	"portfolio-api/api/domain"
+	"portfolio-api/api/domain/skill"
 )
 
 // SkillRepository は、SkillドメインについてCloudFirestoreとのやり取りを担うRepository
@@ -15,7 +15,7 @@ type SkillRepository struct {
 }
 
 // GetByTerm は、引数で受け取ったterm(serverside, frontend, infrastructure)のコレクションについて全てを取得する
-func (repo *SkillRepository) GetByTerm(t string) (skills domain.Skills, err error) {
+func (repo *SkillRepository) GetByTerm(t string) (skills skill.Skills, err error) {
 
 	ctx := context.Background()
 
@@ -35,9 +35,9 @@ func (repo *SkillRepository) GetByTerm(t string) (skills domain.Skills, err erro
 		return
 	}
 
-	skills = make(domain.Skills, 0)
+	skills = make(skill.Skills, 0)
 	for _, doc := range docs {
-		s := new(domain.Skill)
+		s := new(skill.Skill)
 		mapToStruct(doc.Data(), &s)
 		skills = append(skills, *s)
 	}
@@ -49,7 +49,7 @@ func (repo *SkillRepository) GetByTerm(t string) (skills domain.Skills, err erro
 }
 
 // GetAll は、termを跨いで全てのコレクションについて取得する
-func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
+func (repo *SkillRepository) GetAll() (skills skill.Skills, err error) {
 
 	ctx := context.Background()
 
@@ -70,9 +70,9 @@ func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
 		return
 	}
 
-	skills = make(domain.Skills, 0)
+	skills = make(skill.Skills, 0)
 	for _, doc := range serversideDocs {
-		s := new(domain.Skill)
+		s := new(skill.Skill)
 		mapToStruct(doc.Data(), &s)
 		skills = append(skills, *s)
 	}
@@ -89,7 +89,7 @@ func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
 	}
 
 	for _, doc := range frontendDocs {
-		s := new(domain.Skill)
+		s := new(skill.Skill)
 		mapToStruct(doc.Data(), &s)
 		skills = append(skills, *s)
 	}
@@ -106,7 +106,7 @@ func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
 	}
 
 	for _, doc := range infrastructureDocs {
-		s := new(domain.Skill)
+		s := new(skill.Skill)
 		mapToStruct(doc.Data(), &s)
 		skills = append(skills, *s)
 	}
@@ -118,7 +118,7 @@ func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
 }
 
 // Store は、引数で受け取ったSkillについて、該当するterm（serverside, frontend, infrastructure）のコレクションに、新たなドキュメントを追加する
-func (repo *SkillRepository) Store(rs domain.ReqSkill) (err error) {
+func (repo *SkillRepository) Store(rs skill.ReqSkill) (err error) {
 
 	ctx := context.Background()
 
@@ -127,9 +127,9 @@ func (repo *SkillRepository) Store(rs domain.ReqSkill) (err error) {
 		return
 	}
 
-	// skill配下のcategoryはネストしているため、domain.Categoryのタグ情報を読み込ませて、
+	// skill配下のcategoryはネストしているため、skill.Categoryのタグ情報を読み込ませて、
 	// ①categoryを除くプロパティで先にDocumentを作り、②map[string]でマージする
-	as := domain.AddSkill{
+	as := skill.AddSkill{
 		CreatedAt: time.Now(),
 		Detail:    rs.Detail,
 		Duration:  rs.Duration,
@@ -163,8 +163,8 @@ func (repo *SkillRepository) Store(rs domain.ReqSkill) (err error) {
 
 }
 
-// Delete は、引数で受け取った値を「domain.DelSkill.Term, domain.DelSkill.Name」として、該当するコレクション内のドキュメントを削除する
-func (repo *SkillRepository) Delete(d domain.DelSkill) (err error) {
+// Delete は、引数で受け取った値を「skill.DelSkill.Term, skill.DelSkill.Name」として、該当するコレクション内のドキュメントを削除する
+func (repo *SkillRepository) Delete(d skill.DelSkill) (err error) {
 
 	ctx := context.Background()
 

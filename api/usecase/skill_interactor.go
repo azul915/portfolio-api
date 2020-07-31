@@ -3,7 +3,7 @@ package usecase
 import (
 	"log"
 
-	"portfolio-api/api/domain"
+	"portfolio-api/api/domain/skill"
 )
 
 // SkillInteractor は、SkillRepositoryを注入したInteractor
@@ -12,7 +12,7 @@ type SkillInteractor struct {
 }
 
 // SkillsByTerm は、database層のSkillRepositoryがtermに応じて集めるコレクションを呼び出す
-func (interactor *SkillInteractor) SkillsByTerm(term string) (skills domain.Skills, err error) {
+func (interactor *SkillInteractor) SkillsByTerm(term string) (skills skill.Skills, err error) {
 
 	skills, err = interactor.SkillRepository.GetByTerm(term)
 
@@ -25,7 +25,7 @@ func (interactor *SkillInteractor) SkillsByTerm(term string) (skills domain.Skil
 }
 
 // Skills は、database層のSkillRepositoryのGetAllを呼び出す
-func (interactor *SkillInteractor) Skills() (skills domain.Skills, err error) {
+func (interactor *SkillInteractor) Skills() (skills skill.Skills, err error) {
 
 	skills, err = interactor.SkillRepository.GetAll()
 
@@ -38,7 +38,7 @@ func (interactor *SkillInteractor) Skills() (skills domain.Skills, err error) {
 }
 
 // Add は、database層のSkillRepositoryのStoreを呼び出す
-func (interactor *SkillInteractor) Add(skill domain.ReqSkill) (err error) {
+func (interactor *SkillInteractor) Add(skill skill.ReqSkill) (err error) {
 
 	err = interactor.SkillRepository.Store(skill)
 
@@ -51,7 +51,7 @@ func (interactor *SkillInteractor) Add(skill domain.ReqSkill) (err error) {
 }
 
 // Delete は、database層のSkillRepositoryのDeleteを呼び出す
-func (interactor *SkillInteractor) Delete(skill domain.DelSkill) (err error) {
+func (interactor *SkillInteractor) Delete(skill skill.DelSkill) (err error) {
 
 	err = interactor.SkillRepository.Delete(skill)
 

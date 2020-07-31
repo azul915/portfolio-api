@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"portfolio-api/api/domain"
+	"portfolio-api/api/domain/product"
 	"portfolio-api/api/interfaces/database"
 	"portfolio-api/api/usecase"
 )
@@ -40,7 +40,7 @@ func (controller *ProductController) Index(c Context) {
 }
 
 // Create は、usecase.ProductInteractorのAddの呼び出しを行う
-func (controller *ProductController) Create(p domain.ReqProduct, c Context) {
+func (controller *ProductController) Create(p product.ReqProduct, c Context) {
 
 	err := controller.Interactor.Add(p)
 	if err != nil {
@@ -56,7 +56,7 @@ func (controller *ProductController) Create(p domain.ReqProduct, c Context) {
 }
 
 // Delete は、usecase.ProductInteractorのDeleteメソッドの呼び出しを行う
-func (controller *ProductController) Delete(d domain.DelProduct, c Context) {
+func (controller *ProductController) Delete(d product.DelProduct, c Context) {
 
 	err := controller.Interactor.Delete(d)
 	if err != nil {

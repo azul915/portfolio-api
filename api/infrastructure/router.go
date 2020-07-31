@@ -6,7 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"portfolio-api/api/domain"
+	"portfolio-api/api/domain/product"
+	"portfolio-api/api/domain/skill"
 	"portfolio-api/api/interfaces/controllers"
 )
 
@@ -56,7 +57,7 @@ func createSkill(skillController *controllers.SkillController, c *gin.Context) {
 	c.Header("access-control-allow-origin", "*")
 	c.Header("Access-Control-Allow-Methods", "POST")
 
-	skill := domain.ReqSkill{}
+	skill := skill.ReqSkill{}
 	if err := c.BindJSON(&skill); err != nil {
 		log.Println("BadRequest")
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -76,7 +77,7 @@ func deleteSkill(skillController *controllers.SkillController, c *gin.Context) {
 
 	term := c.Query("term")
 	name := c.Query("name")
-	deleteSkill := domain.DelSkill{Name: name, Term: term}
+	deleteSkill := skill.DelSkill{Name: name, Term: term}
 
 	skillController.Delete(deleteSkill, c)
 
@@ -96,7 +97,7 @@ func createProduct(productController *controllers.ProductController, c *gin.Cont
 	c.Header("access-control-allow-origin", "*")
 	c.Header("Access-Control-Allow-Methods", "POST")
 
-	product := domain.ReqProduct{}
+	product := product.ReqProduct{}
 	if err := c.BindJSON(&product); err != nil {
 		log.Println("BadRequest")
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -113,7 +114,7 @@ func deleteProduct(productController *controllers.ProductController, c *gin.Cont
 	c.Header("Access-Control-Allow-Methods", "DELETE")
 
 	name := c.Query("name")
-	deleteProduct := domain.DelProduct{Name: name}
+	deleteProduct := product.DelProduct{Name: name}
 
 	productController.Delete(deleteProduct, c)
 }
