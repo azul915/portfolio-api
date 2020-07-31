@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"time"
 
 	"cloud.google.com/go/firestore"
 
@@ -117,7 +118,7 @@ func (repo *SkillRepository) GetAll() (skills domain.Skills, err error) {
 }
 
 // Store は、引数で受け取ったSkillについて、該当するterm（serverside, frontend, infrastructure）のコレクションに、新たなドキュメントを追加する
-func (repo *SkillRepository) Store(s domain.Skill) (err error) {
+func (repo *SkillRepository) Store(rs domain.ReqSkill) (err error) {
 
 	ctx := context.Background()
 
@@ -129,12 +130,12 @@ func (repo *SkillRepository) Store(s domain.Skill) (err error) {
 	// skill配下のcategoryはネストしているため、domain.Categoryのタグ情報を読み込ませて、
 	// ①categoryを除くプロパティで先にDocumentを作り、②map[string]でマージする
 	as := domain.AddSkill{
-		CreatedAt: s.CreatedAt,
-		Detail:    s.Detail,
-		Duration:  s.Duration,
-		Name:      s.Name,
-		SelfEval:  s.SelfEval,
-		Term:      s.Term,
+		CreatedAt: time.Now(),
+		Detail:    rs.Detail,
+		Duration:  rs.Duration,
+		Name:      rs.Name,
+		SelfEval:  rs.SelfEval,
+		Term:      rs.Term,
 	}
 
 	doc := client.Collection(as.Term).Doc(as.Name)
@@ -148,8 +149,8 @@ func (repo *SkillRepository) Store(s domain.Skill) (err error) {
 	// ②map[string]でcategoryを同じDocumentにマージする
 	_, err = doc.Set(ctx, map[string]interface{}{
 		"category": map[string]interface{}{
-			"id":   s.Category.ID,
-			"name": s.Category.Name,
+			"id":   rs.Category.ID,
+			"name": rs.Category.Name,
 		},
 	}, firestore.MergeAll)
 	if err != nil {

@@ -38,7 +38,7 @@ func (interactor *SkillInteractor) Skills() (skills domain.Skills, err error) {
 }
 
 // Add は、database層のSkillRepositoryのStoreを呼び出す
-func (interactor *SkillInteractor) Add(skill domain.Skill) (err error) {
+func (interactor *SkillInteractor) Add(skill domain.ReqSkill) (err error) {
 
 	err = interactor.SkillRepository.Store(skill)
 

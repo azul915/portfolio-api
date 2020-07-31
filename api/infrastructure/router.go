@@ -56,7 +56,7 @@ func createSkill(skillController *controllers.SkillController, c *gin.Context) {
 	c.Header("access-control-allow-origin", "*")
 	c.Header("Access-Control-Allow-Methods", "POST")
 
-	skill := domain.Skill{}
+	skill := domain.ReqSkill{}
 	if err := c.BindJSON(&skill); err != nil {
 		log.Println("BadRequest")
 		c.JSON(http.StatusBadRequest, gin.H{

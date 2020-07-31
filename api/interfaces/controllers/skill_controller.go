@@ -55,7 +55,7 @@ func (controller *SkillController) Index(c Context) {
 }
 
 // Create は、usecase.SkillInteractorのAddの呼び出しを行う
-func (controller *SkillController) Create(s domain.Skill, c Context) {
+func (controller *SkillController) Create(s domain.ReqSkill, c Context) {
 
 	err := controller.Interactor.Add(s)
 	if err != nil {

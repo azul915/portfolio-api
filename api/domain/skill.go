@@ -5,6 +5,17 @@ import "time"
 // Skills は、Skillのarray
 type Skills []Skill
 
+// ReqSkill は、Category, CreatedAt, Detail, Duration, Name, SelfEval, Term を持つ struct
+type ReqSkill struct {
+	Category Category `json:"category"`
+	Detail   string   `json:"detail"`
+	Duration int64    `json:"duration"`
+	Name     string   `json:"name"`
+	SelfEval int64    `json:"self_evaluation"`
+	// TODO: Enumで実装
+	Term string `json:"term"`
+}
+
 // Skill は、Category, CreatedAt, Detail, Duraition, Name, SelfEval, Term を持つ struct
 type Skill struct {
 	Category  Category  `json:"category"`

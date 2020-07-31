@@ -8,6 +8,6 @@ import (
 type SkillRepository interface {
 	GetByTerm(string) (domain.Skills, error)
 	GetAll() (domain.Skills, error)
-	Store(domain.Skill) error
+	Store(domain.ReqSkill) error
 	Delete(domain.DelSkill) error
 }
