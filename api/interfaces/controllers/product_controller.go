@@ -40,9 +40,9 @@ func (controller *ProductController) Index(c Context) {
 }
 
 // Create は、usecase.ProductInteractorのAddの呼び出しを行う
-func (controller *ProductController) Create(cp domain.Product, c Context) {
+func (controller *ProductController) Create(p domain.Product, c Context) {
 
-	err := controller.Interactor.Add(cp)
+	err := controller.Interactor.Add(p)
 	if err != nil {
 		log.Fatalln(err)
 		c.JSON(500, NewError(err))

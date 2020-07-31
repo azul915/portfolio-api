@@ -54,18 +54,19 @@ func (repo *ProductRepository) Store(p domain.Product) (err error) {
 		return
 	}
 
-	cp := domain.Product{
-		Name:      p.Name,
-		DemoURL:   p.DemoURL,
-		Feature:   p.Feature,
-		Effort:    p.Effort,
-		GithubURL: p.GithubURL,
+	ap := domain.AddProduct{
 		CreatedAt: p.CreatedAt,
+		DemoURL:   p.DemoURL,
+		Effort:    p.DemoURL,
+		Feature:   p.Feature,
+		GithubURL: p.GithubURL,
+		Name:      p.Name,
 	}
-	// Document "product" 作成
-	doc := client.Collection("Product").Doc(cp.Name)
 
-	_, err = doc.Set(ctx, cp)
+	// コレクション "products" 作成
+	doc := client.Collection("products").Doc(ap.Name)
+
+	_, err = doc.Set(ctx, ap)
 	if err != nil {
 		return
 	}

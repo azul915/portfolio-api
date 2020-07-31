@@ -102,6 +102,7 @@ func createProduct(productController *controllers.ProductController, c *gin.Cont
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "BadRequest",
 		})
+		return
 	}
 	productController.Create(product, c)
 }
