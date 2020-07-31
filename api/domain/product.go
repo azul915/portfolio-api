@@ -5,6 +5,15 @@ import "time"
 // Products は、Productのarray
 type Products []Product
 
+// ReqProduct は、Name, DemoURL, Feature, Effort, GithubURL を持つ struct
+type ReqProduct struct {
+	Name      string `json:"prd_name"`
+	DemoURL   string `json:"demo"`
+	Feature   string `json:"feature"`
+	Effort    string `json:"effort"`
+	GithubURL string `json:"githuburl"`
+}
+
 // Product は、Name, DemoURL, Feature, Effort, GithubURL, CreatedAt を持つ struct
 type Product struct {
 	Name      string    `json:"prd_name"`

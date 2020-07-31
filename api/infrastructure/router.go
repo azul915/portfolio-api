@@ -96,7 +96,7 @@ func createProduct(productController *controllers.ProductController, c *gin.Cont
 	c.Header("access-control-allow-origin", "*")
 	c.Header("Access-Control-Allow-Methods", "POST")
 
-	product := domain.Product{}
+	product := domain.ReqProduct{}
 	if err := c.BindJSON(&product); err != nil {
 		log.Println("BadRequest")
 		c.JSON(http.StatusBadRequest, gin.H{

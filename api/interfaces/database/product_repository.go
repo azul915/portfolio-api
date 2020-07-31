@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"time"
 
 	"cloud.google.com/go/firestore"
 
@@ -45,7 +46,7 @@ func (repo *ProductRepository) GetAll() (products domain.Products, err error) {
 }
 
 // Store は、引数で受け取ったProductについて、新たなドキュメントを追加する
-func (repo *ProductRepository) Store(p domain.Product) (err error) {
+func (repo *ProductRepository) Store(rp domain.ReqProduct) (err error) {
 
 	ctx := context.Background()
 
@@ -55,12 +56,12 @@ func (repo *ProductRepository) Store(p domain.Product) (err error) {
 	}
 
 	ap := domain.AddProduct{
-		CreatedAt: p.CreatedAt,
-		DemoURL:   p.DemoURL,
-		Effort:    p.DemoURL,
-		Feature:   p.Feature,
-		GithubURL: p.GithubURL,
-		Name:      p.Name,
+		CreatedAt: time.Now(),
+		DemoURL:   rp.DemoURL,
+		Effort:    rp.DemoURL,
+		Feature:   rp.Feature,
+		GithubURL: rp.GithubURL,
+		Name:      rp.Name,
 	}
 
 	// コレクション "products" 作成

@@ -25,7 +25,7 @@ func (interactor *ProductInteractor) Products() (products domain.Products, err e
 }
 
 // Add は、database層のProductRepositoryのStoreを呼び出す
-func (interactor *ProductInteractor) Add(product domain.Product) (err error) {
+func (interactor *ProductInteractor) Add(product domain.ReqProduct) (err error) {
 
 	err = interactor.ProductRepository.Store(product)
 
