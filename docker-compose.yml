@@ -1,15 +1,13 @@
 version: '3.4'
-
 services:
+
   api:
-    build: 
+    build:
       context: .
-      dockerfile: ./Dockerfile
-      target: dev
+      dockerfile: docker/api/Dockerfile
+      target: builder
     container_name: goapi
-    stdin_open: true
-    tty: true
+    command: ["/app/api"]
     ports:
       - 1999:1999
-    # volumes:
-    #   - ./:/go/src
+

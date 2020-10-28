@@ -1,0 +1,29 @@
+FROM golang:1.13.8-alpine as builder
+
+ENV GO111MODULE on
+ENV CGO_ENABLED 0
+ENV GOARCH amd64
+ENV GOOS linux
+ENV HOME /go/src
+
+WORKDIR $HOME
+
+COPY go.mod $HOME/go.mod
+COPY go.sum $HOME/go.sum
+RUN set -ex && \
+    apk add --no-cache git && \
+    go mod download
+
+COPY ./api $HOME/api
+COPY server.go $HOME/server.go
+COPY credentials.json $HOME/credentials.json
+
+RUN go build -v -o /app/api $HOME/server.go
+CMD ["/app/api"]
+
+FROM alpine:latest as prod
+
+WORKDIR /app
+COPY --from=builder /app/api /app/api
+
+CMD ["/app/api"]
