@@ -34,7 +34,7 @@ func init() {
 
 func indexSkillsByTerm(skillController *controllers.SkillController, c *gin.Context) {
 
-	c.Header("access-control-allow-origin", "*")
+	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "GET")
 
 	term := c.Param("term")
@@ -45,7 +45,7 @@ func indexSkillsByTerm(skillController *controllers.SkillController, c *gin.Cont
 
 func indexAllSkills(skillController *controllers.SkillController, c *gin.Context) {
 
-	c.Header("access-control-allow-origin", "*")
+	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "GET")
 
 	skillController.Index(c)
@@ -54,7 +54,7 @@ func indexAllSkills(skillController *controllers.SkillController, c *gin.Context
 
 func createSkill(skillController *controllers.SkillController, c *gin.Context) {
 
-	c.Header("access-control-allow-origin", "*")
+	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "POST")
 
 	skill := skill.ReqSkill{}
@@ -72,7 +72,7 @@ func createSkill(skillController *controllers.SkillController, c *gin.Context) {
 
 func deleteSkill(skillController *controllers.SkillController, c *gin.Context) {
 
-	c.Header("access-control-allow-origin", "*")
+	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "DELETE")
 
 	term := c.Query("term")
@@ -85,7 +85,7 @@ func deleteSkill(skillController *controllers.SkillController, c *gin.Context) {
 
 func indexAllProducts(productController *controllers.ProductController, c *gin.Context) {
 
-	c.Header("access-control-allow-origin", "*")
+	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "GET")
 
 	productController.Index(c)
@@ -94,7 +94,7 @@ func indexAllProducts(productController *controllers.ProductController, c *gin.C
 
 func createProduct(productController *controllers.ProductController, c *gin.Context) {
 
-	c.Header("access-control-allow-origin", "*")
+	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "POST")
 
 	product := product.ReqProduct{}
@@ -110,7 +110,7 @@ func createProduct(productController *controllers.ProductController, c *gin.Cont
 
 func deleteProduct(productController *controllers.ProductController, c *gin.Context) {
 
-	c.Header("access-control-allow-origin", "*")
+	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "DELETE")
 
 	name := c.Query("name")
