@@ -4,10 +4,17 @@ services:
   api:
     build:
       context: .
-      dockerfile: docker/api/Dockerfile
+      dockerfile: ./docker/api/Dockerfile
       target: builder
     container_name: goapi
-    command: ["/app/api"]
+    command: ["/go/bin/air", "-c", "/go/src/.air.toml"]
+    volumes:
+      - ./api/:/go/src/api/
+      - ./server.go:/go/src/server.go
+      - ./go.mod:/go/src/go.mod
+      - ./go.sum:/go/src/go.sum
+      - ./credentials.json:/go/src/credentials.json
+      - .air.toml:/go/src/.air.toml
     ports:
       - 1999:1999
     networks:

@@ -11,8 +11,9 @@ WORKDIR $HOME
 COPY go.mod $HOME/go.mod
 COPY go.sum $HOME/go.sum
 RUN set -ex && \
-    apk add --no-cache git && \
-    go mod download
+    apk --update --no-cache add git && \
+    go mod download && \
+    go get -u github.com/cosmtrek/air
 
 COPY ./api $HOME/api
 COPY server.go $HOME/server.go
