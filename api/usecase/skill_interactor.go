@@ -14,7 +14,13 @@ type SkillInteractor struct {
 // SkillsByTerm は、database層のSkillRepositoryがtermに応じて集めるコレクションを呼び出す
 func (interactor *SkillInteractor) SkillsByTerm(term string) (skills skill.Skills, err error) {
 
-	skills, err = interactor.SkillRepository.GetByTerm(term)
+	tms, err := skill.NewTerm(term)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	skills, err = interactor.SkillRepository.GetByTerm(tms.Name())
 
 	if err != nil {
 		log.Println(err)
@@ -38,9 +44,16 @@ func (interactor *SkillInteractor) Skills() (skills skill.Skills, err error) {
 }
 
 // Add は、database層のSkillRepositoryのStoreを呼び出す
-func (interactor *SkillInteractor) Add(skill skill.ReqSkill) (err error) {
+func (interactor *SkillInteractor) Add(s skill.ReqSkill) (err error) {
 
-	err = interactor.SkillRepository.Store(skill)
+	tms, err := skill.NewTerm(s.Term)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	s.Term = tms.Name()
+
+	err = interactor.SkillRepository.Store(s)
 
 	if err != nil {
 		log.Println(err)
@@ -51,9 +64,16 @@ func (interactor *SkillInteractor) Add(skill skill.ReqSkill) (err error) {
 }
 
 // Delete は、database層のSkillRepositoryのDeleteを呼び出す
-func (interactor *SkillInteractor) Delete(skill skill.DelSkill) (err error) {
+func (interactor *SkillInteractor) Delete(s skill.DelSkill) (err error) {
 
-	err = interactor.SkillRepository.Delete(skill)
+	tms, err := skill.NewTerm(s.Term)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	s.Term = tms.Name()
+
+	err = interactor.SkillRepository.Delete(s)
 
 	if err != nil {
 		log.Println(err)
