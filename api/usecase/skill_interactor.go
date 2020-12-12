@@ -16,7 +16,6 @@ func (interactor *SkillInteractor) SkillsByTerm(term string) (skills skill.Skill
 
 	tms, err := skill.NewTerm(term)
 	if err != nil {
-		log.Println(err)
 		return
 	}
 

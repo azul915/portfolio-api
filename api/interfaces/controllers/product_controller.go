@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -33,7 +32,6 @@ func (controller *ProductController) Index(c Context) {
 
 	products, err := controller.Interactor.Products()
 	if err != nil {
-		log.Fatalln(err)
 		c.JSON(500, NewError(err))
 		return
 	}
@@ -46,7 +44,6 @@ func (controller *ProductController) Create(p product.ReqProduct, c Context) {
 
 	err := controller.Interactor.Add(p)
 	if err != nil {
-		log.Fatalln(err)
 		c.JSON(500, NewError(err))
 		return
 	}
@@ -62,7 +59,6 @@ func (controller *ProductController) Delete(d product.DelProduct, c Context) {
 
 	err := controller.Interactor.Delete(d)
 	if err != nil {
-		log.Fatalln(err)
 		c.JSON(500, NewError(err))
 		return
 	}

@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -33,7 +32,6 @@ func (controller *SkillController) IndexByTerm(term string, c Context) {
 
 	skills, err := controller.Interactor.SkillsByTerm(term)
 	if err != nil {
-		log.Fatalln(err)
 		c.JSON(500, NewError(err))
 		return
 	}
@@ -47,7 +45,6 @@ func (controller *SkillController) Index(c Context) {
 
 	skills, err := controller.Interactor.Skills()
 	if err != nil {
-		log.Fatalln(err)
 		c.JSON(500, NewError(err))
 		return
 	}
@@ -61,7 +58,6 @@ func (controller *SkillController) Create(s skill.ReqSkill, c Context) {
 
 	err := controller.Interactor.Add(s)
 	if err != nil {
-		log.Fatalln(err)
 		c.JSON(500, NewError(err))
 		return
 	}
@@ -77,7 +73,6 @@ func (controller *SkillController) Delete(d skill.DelSkill, c Context) {
 
 	err := controller.Interactor.Delete(d)
 	if err != nil {
-		log.Fatalln(err)
 		c.JSON(500, NewError(err))
 		return
 	}
