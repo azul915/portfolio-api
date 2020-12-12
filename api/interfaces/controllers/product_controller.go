@@ -21,7 +21,9 @@ func NewProductController() *ProductController {
 
 	return &ProductController{
 		Interactor: usecase.ProductInteractor{
-			ProductRepository: &database.ProductRepository{},
+			ProductRepository: &database.ProductRepository{
+				Fc: *database.NewFirestoreClient(),
+			},
 		},
 	}
 }

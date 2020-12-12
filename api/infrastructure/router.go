@@ -17,22 +17,22 @@ var Router *gin.Engine
 func init() {
 	r := gin.Default()
 
-	s := controllers.NewSkillController()
-	r.GET("/skills/:term", func(c *gin.Context) { indexSkillsByTerm(s, c) })
-	r.GET("/skills", func(c *gin.Context) { indexAllSkills(s, c) })
-	r.POST("/skill", func(c *gin.Context) { createSkill(s, c) })
-	r.DELETE("/skill", func(c *gin.Context) { deleteSkill(s, c) })
+	r.GET("/skills/:term", func(c *gin.Context) { indexSkillsByTerm(c) })
+	r.GET("/skills", func(c *gin.Context) { indexAllSkills(c) })
+	r.POST("/skill", func(c *gin.Context) { createSkill(c) })
+	r.DELETE("/skill", func(c *gin.Context) { deleteSkill(c) })
 
-	p := controllers.NewProductController()
-	r.GET("/products", func(c *gin.Context) { indexAllProducts(p, c) })
-	r.POST("/product", func(c *gin.Context) { createProduct(p, c) })
-	r.DELETE("/product", func(c *gin.Context) { deleteProduct(p, c) })
+	r.GET("/products", func(c *gin.Context) { indexAllProducts(c) })
+	r.POST("/product", func(c *gin.Context) { createProduct(c) })
+	r.DELETE("/product", func(c *gin.Context) { deleteProduct(c) })
 
 	Router = r
 
 }
 
-func indexSkillsByTerm(skillController *controllers.SkillController, c *gin.Context) {
+func indexSkillsByTerm(c *gin.Context) {
+
+	skillController := controllers.NewSkillController()
 
 	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "GET")
@@ -43,7 +43,9 @@ func indexSkillsByTerm(skillController *controllers.SkillController, c *gin.Cont
 
 }
 
-func indexAllSkills(skillController *controllers.SkillController, c *gin.Context) {
+func indexAllSkills(c *gin.Context) {
+
+	skillController := controllers.NewSkillController()
 
 	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "GET")
@@ -52,7 +54,9 @@ func indexAllSkills(skillController *controllers.SkillController, c *gin.Context
 
 }
 
-func createSkill(skillController *controllers.SkillController, c *gin.Context) {
+func createSkill(c *gin.Context) {
+
+	skillController := controllers.NewSkillController()
 
 	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "POST")
@@ -70,7 +74,9 @@ func createSkill(skillController *controllers.SkillController, c *gin.Context) {
 
 }
 
-func deleteSkill(skillController *controllers.SkillController, c *gin.Context) {
+func deleteSkill(c *gin.Context) {
+
+	skillController := controllers.NewSkillController()
 
 	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "DELETE")
@@ -83,7 +89,9 @@ func deleteSkill(skillController *controllers.SkillController, c *gin.Context) {
 
 }
 
-func indexAllProducts(productController *controllers.ProductController, c *gin.Context) {
+func indexAllProducts(c *gin.Context) {
+
+	productController := controllers.NewProductController()
 
 	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "GET")
@@ -92,7 +100,9 @@ func indexAllProducts(productController *controllers.ProductController, c *gin.C
 
 }
 
-func createProduct(productController *controllers.ProductController, c *gin.Context) {
+func createProduct(c *gin.Context) {
+
+	productController := controllers.NewProductController()
 
 	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "POST")
@@ -108,7 +118,9 @@ func createProduct(productController *controllers.ProductController, c *gin.Cont
 	productController.Create(product, c)
 }
 
-func deleteProduct(productController *controllers.ProductController, c *gin.Context) {
+func deleteProduct(c *gin.Context) {
+
+	productController := controllers.NewProductController()
 
 	c.Header("access-control-allow-origin", "http://localhost:8083")
 	c.Header("Access-Control-Allow-Methods", "DELETE")

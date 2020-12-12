@@ -1,7 +1,6 @@
 package database
 
 import (
-	"context"
 	"time"
 
 	"cloud.google.com/go/firestore"
@@ -11,18 +10,14 @@ import (
 
 // SkillRepository は、SkillドメインについてCloudFirestoreとのやり取りを担うRepository
 type SkillRepository struct {
-	Val interface{}
+	Fc FirestoreClient
 }
 
 // GetByTerm は、引数で受け取ったterm(serverside, frontend, infrastructure)のコレクションについて全てを取得する
 func (repo *SkillRepository) GetByTerm(t string) (skills skill.Skills, err error) {
 
-	ctx := context.Background()
-
-	client, err := firebaseInit(ctx)
-	if err != nil {
-		return
-	}
+	ctx := repo.Fc.ctx
+	client := repo.Fc.client
 
 	// コレクションをカテゴリー順/asc, 自己評価/descでソート、取得
 	data := client.Collection(t).
@@ -51,12 +46,8 @@ func (repo *SkillRepository) GetByTerm(t string) (skills skill.Skills, err error
 // GetAll は、termを跨いで全てのコレクションについて取得する
 func (repo *SkillRepository) GetAll() (skills skill.Skills, err error) {
 
-	ctx := context.Background()
-
-	client, err := firebaseInit(ctx)
-	if err != nil {
-		return
-	}
+	ctx := repo.Fc.ctx
+	client := repo.Fc.client
 
 	// TODO: ["serverside", "frontend", "infrastrucure"]で回しながらGetAllとskillsへのappendを行う
 	// 「serverside」コレクションをカテゴリー順/asc, 自己評価/descでソート、取得
@@ -120,12 +111,8 @@ func (repo *SkillRepository) GetAll() (skills skill.Skills, err error) {
 // Store は、引数で受け取ったSkillについて、該当するterm（serverside, frontend, infrastructure）のコレクションに、新たなドキュメントを追加する
 func (repo *SkillRepository) Store(rs skill.ReqSkill) (err error) {
 
-	ctx := context.Background()
-
-	client, err := firebaseInit(ctx)
-	if err != nil {
-		return
-	}
+	ctx := repo.Fc.ctx
+	client := repo.Fc.client
 
 	// skill配下のcategoryはネストしているため、skill.Categoryのタグ情報を読み込ませて、
 	// ①categoryを除くプロパティで先にDocumentを作り、②map[string]でマージする
@@ -166,12 +153,8 @@ func (repo *SkillRepository) Store(rs skill.ReqSkill) (err error) {
 // Delete は、引数で受け取った値を「skill.DelSkill.Term, skill.DelSkill.Name」として、該当するコレクション内のドキュメントを削除する
 func (repo *SkillRepository) Delete(d skill.DelSkill) (err error) {
 
-	ctx := context.Background()
-
-	client, err := firebaseInit(ctx)
-	if err != nil {
-		return
-	}
+	ctx := repo.Fc.ctx
+	client := repo.Fc.client
 
 	_, err = client.Collection(d.Term).Doc(d.Name).Delete(ctx)
 	if err != nil {

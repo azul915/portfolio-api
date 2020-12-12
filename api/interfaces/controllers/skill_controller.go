@@ -21,7 +21,9 @@ func NewSkillController() *SkillController {
 
 	return &SkillController{
 		Interactor: usecase.SkillInteractor{
-			SkillRepository: &database.SkillRepository{},
+			SkillRepository: &database.SkillRepository{
+				Fc: *database.NewFirestoreClient(),
+			},
 		},
 	}
 }

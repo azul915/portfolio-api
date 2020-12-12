@@ -1,7 +1,6 @@
 package database
 
 import (
-	"context"
 	"time"
 
 	"cloud.google.com/go/firestore"
@@ -11,18 +10,14 @@ import (
 
 // ProductRepository は、ProductドメインについてCloudFirestoreとのやり取りを担うRepository
 type ProductRepository struct {
-	Val interface{}
+	Fc FirestoreClient
 }
 
 // GetAll は、全ての「products」コレクションを取得する
 func (repo *ProductRepository) GetAll() (products product.Products, err error) {
 
-	ctx := context.Background()
-
-	client, err := firebaseInit(ctx)
-	if err != nil {
-		return
-	}
+	ctx := repo.Fc.ctx
+	client := repo.Fc.client
 
 	// 「products」コレクションをcreated_at/ascで取得
 	data := client.Collection("products").OrderBy("created_at", firestore.Asc).Documents(ctx)
@@ -48,12 +43,8 @@ func (repo *ProductRepository) GetAll() (products product.Products, err error) {
 // Store は、引数で受け取ったProductについて、新たなドキュメントを追加する
 func (repo *ProductRepository) Store(rp product.ReqProduct) (err error) {
 
-	ctx := context.Background()
-
-	client, err := firebaseInit(ctx)
-	if err != nil {
-		return
-	}
+	ctx := repo.Fc.ctx
+	client := repo.Fc.client
 
 	ap := product.AddProduct{
 		CreatedAt: time.Now(),
@@ -81,12 +72,8 @@ func (repo *ProductRepository) Store(rp product.ReqProduct) (err error) {
 // Delete は、引数で受け取った値を「product.DelProduct.Name」として、該当するドキュメントを削除する
 func (repo *ProductRepository) Delete(d product.DelProduct) (err error) {
 
-	ctx := context.Background()
-
-	client, err := firebaseInit(ctx)
-	if err != nil {
-		return
-	}
+	ctx := repo.Fc.ctx
+	client := repo.Fc.client
 
 	_, err = client.Collection("products").Doc(d.Name).Delete(ctx)
 	if err != nil {
